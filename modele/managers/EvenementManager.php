@@ -1,5 +1,7 @@
 <?php
 
+require_once('DBManager.php');
+
 class EvenementManager extends DBManager
 {
     public function getEvenements()
@@ -30,8 +32,8 @@ class EvenementManager extends DBManager
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }
@@ -57,8 +59,8 @@ class EvenementManager extends DBManager
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }
@@ -72,8 +74,8 @@ class EvenementManager extends DBManager
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }

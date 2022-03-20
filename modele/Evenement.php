@@ -3,10 +3,10 @@
 class Evenement
 {
     private int $id;
-    private DateTime $date;
+    private String $date;
     private String $nom;
-    private int $heureDebut; //todo
-    private int $heureFin;   //todo
+    private String $heureDebut;
+    private String $heureFin;
     private float $cout;
 
     public function __construct(array $data)
@@ -47,13 +47,16 @@ class Evenement
 
     public function setHeureDebut($heureDebut)
     {
-        //todo
+        $heureDebut=strtotime($heureDebut);
+        $this->heureDebut=gmdate('H:i', $heureDebut);
     }
 
     public function setHeureFin($heureFin)
     {
-        //todo
+        $heureFin=strtotime($heureFin);
+        $this->heureFin=gmdate('H:i', $heureFin);
     }
+
 
     public function setCout($cout)
     {
@@ -71,7 +74,6 @@ class Evenement
 
     public function getDate()
     {
-        //todo
         return $this->date;
     }
 

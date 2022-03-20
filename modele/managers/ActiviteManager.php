@@ -1,5 +1,7 @@
 <?php
 
+require_once('DBManager.php');
+
 class ActiviteManager extends DBManager
 {
     public function getActivites()
@@ -17,20 +19,23 @@ class ActiviteManager extends DBManager
 
     public function insert(Activite $activite)
     {
-        $sql = "INSERT INTO activite(nom,HeureDebut,HeureFin,jour)
-                VALUES (:nom,:HeureDebut,:HeureFin,:jour)";
+        $sql = "INSERT INTO activite(nom,heureDebut,heureFin,jour)
+                VALUES (:nom,:heureDebut,:heureFin,:jour)";
         try {
             $requete = $this->getConnexion()->prepare($sql);
-
-            $requete->bindParam(':nom', $activite->getNom());
-            $requete->bindParam(':HeureDebut', $activite->getHeureDebut());
-            $requete->bindParam(':HeureFin', $activite->getHeureFin());
-            $requete->bindParam(':jour', $activite->getJour());
+            $nom = $activite->getNom();
+            $hd = $activite->getHeureDebut();
+            $hf = $activite->getHeureFin();
+            $jour = $activite->getJour();
+            $requete->bindParam(':nom', $nom);
+            $requete->bindParam(':heureDebut', $hd);
+            $requete->bindParam(':heureFin', $hf);
+            $requete->bindParam(':jour', $jour);
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }
@@ -42,20 +47,20 @@ class ActiviteManager extends DBManager
             $id = $activite->getId();
             $nom = $activite->getNom();
             $jour = $activite->getJour();
-            $HeureDebut = $activite->getHeureDebut();
-            $HeureFin = $activite->getHeureFin();
+            $heureDebut = $activite->getHeureDebut();
+            $heureFin = $activite->getHeureFin();
 
             $sql = "UPDATE activite SET
                     nom='$nom', jour='$jour',
-                    HeureFin='$HeureFin', HeureDebut='$HeureDebut'
+                    heureFin='$heureFin', heureDebut='$heureDebut'
                     WHERE id='$id'";
 
             $requete = $this->getConnexion()->prepare($sql);
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }
@@ -69,8 +74,8 @@ class ActiviteManager extends DBManager
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }
