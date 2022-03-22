@@ -3,8 +3,8 @@
 class Evenement
 {
     private int $id;
-    private String $date;
     private String $nom;
+    private String $date;
     private String $heureDebut;
     private String $heureFin;
     private float $cout;

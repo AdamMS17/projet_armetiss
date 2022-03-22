@@ -4,6 +4,16 @@
     require_once('../modele/Activite.php');
 
     session_start();
+
+    // //AFFICHAGE
+    // $vue = new Vue('AccueilAdmin');
+    // $vue->generer(array());
+
+    // $am = new ActiviteManager;
+    // $activites;
+    // $evenements;
+
+    //AJOUT
     $vue = new Vue('AjoutActivite');
 
     $vue->generer(array());

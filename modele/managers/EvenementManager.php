@@ -23,12 +23,16 @@ class EvenementManager extends DBManager
                 VALUES (:nom,:date,:HeureDebut,:HeureFin,:cout)";
         try {
             $requete = $this->getConnexion()->prepare($sql);
-
-            $requete->bindParam(':date', $evenement->getDate());
-            $requete->bindParam(':nom',$evenement->getNom());
-            $requete->bindParam(':HeureDebut', $evenement->getHeureDebut());
-            $requete->bindParam(':HeureFin', $evenement->getHeureFin());
-            $requete->bindParam(':cout', $evenement->getCout());
+            $date=$evenement->getDate();
+            $nom=$evenement->getNom();
+            $heureDebut=$evenement->getHeureDebut();
+            $heureFin=$evenement->getHeureFin();
+            $cout=$evenement->getCout();
+            $requete->bindParam(':date', $date);
+            $requete->bindParam(':nom', $nom);
+            $requete->bindParam(':HeureDebut', $heureDebut);
+            $requete->bindParam(':HeureFin', $heureFin);
+            $requete->bindParam(':cout', $cout);
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
@@ -48,7 +52,6 @@ class EvenementManager extends DBManager
             $HeureDebut = $evenement->getHeureDebut();
             $HeureFin = $evenement->getHeureFin();
             $cout = $evenement->getCout();
-
 
             $sql = "UPDATE evenement SET date='$date',
                     nom='$nom', HeureDebut='$HeureDebut',
