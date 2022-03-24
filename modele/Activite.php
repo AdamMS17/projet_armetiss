@@ -3,10 +3,10 @@
 class Activite
 {
     private int $id;
-    private String $nom; //todo
+    private String $nom;
     private String $jour;
-    private int $heureDebut;
-    private int $heureFin;
+    private String $heureDebut;
+    private String $heureFin;
 
     public function __construct(array $data)
     {
@@ -17,7 +17,6 @@ class Activite
     {
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);
-
             if (method_exists($this, $method))
                 $this->$method($value);
         }
@@ -40,20 +39,21 @@ class Activite
 
     public function setJour($jour)
     {
-        //todo
+        if (is_string($jour))
+            $this->jour = $jour;
     }
 
     public function setHeureDebut($heureDebut)
     {
-        //todo
+        $heureDebut = strtotime($heureDebut);
+        $this->heureDebut = gmdate('H:i', $heureDebut);
     }
 
     public function setHeureFin($heureFin)
     {
-        //todo
+        $heureFin = strtotime($heureFin);
+        $this->heureFin = gmdate('H:i', $heureFin);
     }
-
-    
 
     //GETTERS
     public function getId()
@@ -80,6 +80,5 @@ class Activite
     {
         return $this->heureFin;
     }
-
-  
 }
+?>

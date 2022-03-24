@@ -1,5 +1,7 @@
 <?php
 
+require_once('DBManager.php');
+
 class EvenementManager extends DBManager
 {
     public function getEvenements()
@@ -21,17 +23,21 @@ class EvenementManager extends DBManager
                 VALUES (:nom,:date,:HeureDebut,:HeureFin,:cout)";
         try {
             $requete = $this->getConnexion()->prepare($sql);
-
-            $requete->bindParam(':date', $evenement->getDate());
-            $requete->bindParam(':nom',$evenement->getNom());
-            $requete->bindParam(':HeureDebut', $evenement->getHeureDebut());
-            $requete->bindParam(':HeureFin', $evenement->getHeureFin());
-            $requete->bindParam(':cout', $evenement->getCout());
+            $date=$evenement->getDate();
+            $nom=$evenement->getNom();
+            $heureDebut=$evenement->getHeureDebut();
+            $heureFin=$evenement->getHeureFin();
+            $cout=$evenement->getCout();
+            $requete->bindParam(':date', $date);
+            $requete->bindParam(':nom', $nom);
+            $requete->bindParam(':HeureDebut', $heureDebut);
+            $requete->bindParam(':HeureFin', $heureFin);
+            $requete->bindParam(':cout', $cout);
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }
@@ -47,7 +53,6 @@ class EvenementManager extends DBManager
             $HeureFin = $evenement->getHeureFin();
             $cout = $evenement->getCout();
 
-
             $sql = "UPDATE evenement SET date='$date',
                     nom='$nom', HeureDebut='$HeureDebut',
                     HeureFin='$HeureFin', cout='$cout'
@@ -57,8 +62,8 @@ class EvenementManager extends DBManager
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }
@@ -72,8 +77,8 @@ class EvenementManager extends DBManager
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
-            // $this->_vue = new Vue('Erreur');
-            // $this->_vue->generer(array('msgErreur' => $msgErreur));
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
         } finally {
             $requete->closeCursor();
         }

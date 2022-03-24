@@ -7,7 +7,7 @@ abstract class DBManager
     private static function setConnexion()
     {
         $database_server = "localhost";
-        $database_name = "armetiss";
+        $database_name = "temp_projet";
         $database_username = "root";
         $database_password = "";
 
