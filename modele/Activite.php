@@ -2,11 +2,11 @@
 
 class Activite
 {
-    private int $id;
-    private String $nom;
-    private String $jour;
-    private String $heureDebut;
-    private String $heureFin;
+    private ?int $id = null;
+    private ?String $nom = null;
+    private ?String $jour = null;
+    private ?String $heureDebut = null;
+    private ?String $heureFin = null;
 
     public function __construct(array $data)
     {
@@ -16,6 +16,10 @@ class Activite
     public function hydrate(array $data)
     {
         foreach ($data as $key => $value) {
+            //Removes suffix from db field's name
+            if(str_ends_with($key,"_Activite"))
+                $key = substr($key, 0, -9);
+
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method))
                 $this->$method($value);
@@ -23,7 +27,7 @@ class Activite
     }
 
     //SETTERS
-    public function setId($id)
+    public function setIdentifiant($id)
     {
         $id = (int) $id;
 
