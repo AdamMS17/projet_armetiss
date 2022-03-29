@@ -7,15 +7,8 @@ require_once('../modele/Evenement.php');
 
 const PAGE="testAdmin.php";
 
-//________________________________
 session_start();
-// try {
-// } catch (Exception $e) {
-//     $msgErreur = $e->getMessage();
-//     $vue = new Vue('Erreur');
-//     $vue->generer(array('msgErreur' => $msgErreur));
-// }
-//________________________________
+
 if (!empty($_GET['ajoutActivite'])) {
 
     //AJOUT D'UNE ACTIVITE
@@ -72,7 +65,7 @@ if (!empty($_GET['ajoutActivite'])) {
     if (!empty($_POST["modificationActivite"])) {
         try {
             $data = array(
-                'id' => $_GET['modActivite'], 'nom' => $_POST['nom'], 'jour' => $_POST['jour'],
+                'identifiant' => $_GET['modActivite'], 'nom' => $_POST['nom'], 'jour' => $_POST['jour'],
                 'heureDebut' => $_POST['heureDebut'], 'heureFin' => $_POST['heureFin']
             );
             $a = new Activite($data);
@@ -104,7 +97,7 @@ if (!empty($_GET['ajoutActivite'])) {
     if (!empty($_POST["modificationEvenement"])) {
         try {
             $data = array(
-                'id' => $_GET['modEvenement'], 'nom' => $_POST['nom'], 'date' => $_POST['date'],
+                'identifiant' => $_GET['modEvenement'], 'nom' => $_POST['nom'], 'date' => $_POST['date'],
                 'heureDebut' => $_POST['heureDebut'], 'heureFin' => $_POST['heureFin'],
                 'cout' => $_POST['cout']
             );
