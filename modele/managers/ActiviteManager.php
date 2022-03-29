@@ -13,13 +13,13 @@ class ActiviteManager extends DBManager
     public function getActivite($id)
     {
         $this->getConnexion();
-        return $this->getByIdName('activite', 'Activite', $id, 'id');
+        return $this->getByIdName('activite', 'Activite', $id, 'identifiant_Activite');
     }
 
 
     public function insert(Activite $activite)
     {
-        $sql = "INSERT INTO activite(nom,heureDebut,heureFin,jour)
+        $sql = "INSERT INTO activite(nom_Activite,heureDebut_Activite,heureFin_Activite,jour_Activite)
                 VALUES (:nom,:heureDebut,:heureFin,:jour)";
         try {
             $requete = $this->getConnexion()->prepare($sql);
@@ -51,9 +51,9 @@ class ActiviteManager extends DBManager
             $heureFin = $activite->getHeureFin();
 
             $sql = "UPDATE activite SET
-                    nom='$nom', jour='$jour',
-                    heureFin='$heureFin', heureDebut='$heureDebut'
-                    WHERE id='$id'";
+                    nom_Activite='$nom', jour_Activite='$jour',
+                    heureFin_Activite='$heureFin', heureDebut_Activite='$heureDebut'
+                    WHERE identifiant_Activite='$id'";
 
             $requete = $this->getConnexion()->prepare($sql);
             $requete->execute();
@@ -68,7 +68,7 @@ class ActiviteManager extends DBManager
 
     function delete(int $id)
     {
-        $sql = "DELETE FROM activite WHERE id=$id";
+        $sql = "DELETE FROM activite WHERE identifiant_Activite=$id";
         try {
             $requete = $this->getConnexion()->prepare($sql);
             $requete->execute();

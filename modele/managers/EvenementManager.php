@@ -13,14 +13,14 @@ class EvenementManager extends DBManager
     public function getEvenement($id)
     {
         $this->getConnexion();
-        return $this->getByIdName('evenement', 'Evenement', $id, 'id');
+        return $this->getByIdName('evenement', 'Evenement', $id, 'identifiant_Evenement');
     }
 
 
     public function insert(Evenement $evenement)
     {
-        $sql = "INSERT INTO evenement(nom,date,HeureDebut,HeureFin,cout)
-                VALUES (:nom,:date,:HeureDebut,:HeureFin,:cout)";
+        $sql = "INSERT INTO evenement(nom_Evenement,date_Evenement,heureDebut_Evenement,heureFin_Evenement,cout_Evenement)
+                VALUES (:nom,:date,:heureDebut,:heureFin,:cout)";
         try {
             $requete = $this->getConnexion()->prepare($sql);
             $date=$evenement->getDate();
@@ -30,8 +30,8 @@ class EvenementManager extends DBManager
             $cout=$evenement->getCout();
             $requete->bindParam(':date', $date);
             $requete->bindParam(':nom', $nom);
-            $requete->bindParam(':HeureDebut', $heureDebut);
-            $requete->bindParam(':HeureFin', $heureFin);
+            $requete->bindParam(':heureDebut', $heureDebut);
+            $requete->bindParam(':heureFin', $heureFin);
             $requete->bindParam(':cout', $cout);
             $requete->execute();
         } catch (PDOException $e) {
@@ -53,10 +53,10 @@ class EvenementManager extends DBManager
             $HeureFin = $evenement->getHeureFin();
             $cout = $evenement->getCout();
 
-            $sql = "UPDATE evenement SET date='$date',
-                    nom='$nom', HeureDebut='$HeureDebut',
-                    HeureFin='$HeureFin', cout='$cout'
-                    WHERE id='$id'";
+            $sql = "UPDATE evenement SET date_Evenement='$date',
+                    nom_Evenement='$nom', heureDebut_Evenement='$HeureDebut',
+                    heureFin_Evenement='$HeureFin', cout_Evenement='$cout'
+                    WHERE identifiant_Evenement='$id'";
 
             $requete = $this->getConnexion()->prepare($sql);
             $requete->execute();
@@ -71,7 +71,7 @@ class EvenementManager extends DBManager
 
     function delete(int $id)
     {
-        $sql = "DELETE FROM evenement WHERE id=$id";
+        $sql = "DELETE FROM evenement WHERE identifiant_Evenement=$id";
         try {
             $requete = $this->getConnexion()->prepare($sql);
             $requete->execute();

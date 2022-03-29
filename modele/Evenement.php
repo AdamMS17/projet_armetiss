@@ -2,12 +2,12 @@
 
 class Evenement
 {
-    private int $id;
-    private String $nom;
-    private String $date;
-    private String $heureDebut;
-    private String $heureFin;
-    private float $cout;
+    private ?int $id = null;
+    private ?String $nom = null;
+    private ?String $date = null;
+    private ?String $heureDebut = null;
+    private ?String $heureFin = null;
+    private ?float $cout = null;
 
     public function __construct(array $data)
     {
@@ -17,15 +17,18 @@ class Evenement
     public function hydrate(array $data)
     {
         foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            //Removes suffix from db field's name
+            if(str_ends_with($key,"_Evenement"))
+                $key = substr($key, 0, -10);
 
+            $method = 'set' . ucfirst($key);
             if (method_exists($this, $method))
                 $this->$method($value);
         }
     }
 
     //SETTERS
-    public function setId($id)
+    public function setIdentifiant($id)
     {
         $id = (int) $id;
 
