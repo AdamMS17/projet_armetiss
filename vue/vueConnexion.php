@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,26 +11,22 @@
     <title>Connection</title>
 </head>
 <body>
-    
-
+  
 
 <div class="wrapper fadeInDown">
   <div id="formContent">
-    <!-- Tabs Titles -->
-
-    <!-- Icon -->
+      
     <div class="fadeIn first">
-      <img src="/assets/logos/Logo_Armetiss.png" id="icon" alt="Armetiss" />
+      <img src="../images/Logo_Armetiss.png" id="icon" alt="Armetiss" />
     </div>
 
-    <!-- Login Form -->
+    
     <form>
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Identifiant">
       <input type="password" id="password" class="fadeIn third" name="login" placeholder="Mot de passe">
       <input type="submit" class="fadeIn fourth" value="Se connecter">
     </form>
 
-    <!-- Remind Passowrd -->
     <div id="formFooter">
       <a class="underlineHover" href="#">Mot de passe oublié?</a>
     </div>
