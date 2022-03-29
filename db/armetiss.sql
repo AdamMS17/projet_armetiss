@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 25 mars 2022 à 12:12
+-- Généré le : lun. 28 mars 2022 à 11:19
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -67,10 +67,10 @@ CREATE TABLE `evenement` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `inscit`
+-- Structure de la table `inscrit`
 --
 
-CREATE TABLE `inscit` (
+CREATE TABLE `inscrit` (
   `identifiant_Activite` int(11) NOT NULL,
   `identifiant_Personne` int(11) NOT NULL,
   `montant` int(5) NOT NULL
@@ -161,10 +161,10 @@ CREATE TABLE `role` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sceance`
+-- Structure de la table `seance`
 --
 
-CREATE TABLE `sceance` (
+CREATE TABLE `seance` (
   `identifiant_Activite` int(11) NOT NULL,
   `date_Sceance` date NOT NULL,
   `identifiant_Personne` int(11) DEFAULT NULL
@@ -195,9 +195,9 @@ ALTER TABLE `evenement`
   ADD PRIMARY KEY (`identifiant_Evenement`);
 
 --
--- Index pour la table `inscit`
+-- Index pour la table `inscrit`
 --
-ALTER TABLE `inscit`
+ALTER TABLE `inscrit`
   ADD KEY `identifiant_Activite` (`identifiant_Activite`),
   ADD KEY `identifiant_Personne` (`identifiant_Personne`);
 
@@ -242,9 +242,9 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`identifiant_Role`);
 
 --
--- Index pour la table `sceance`
+-- Index pour la table `seance`
 --
-ALTER TABLE `sceance`
+ALTER TABLE `seance`
   ADD KEY `identifiant_Activite` (`identifiant_Activite`),
   ADD KEY `identifiant_Personne` (`identifiant_Personne`);
 
@@ -294,11 +294,11 @@ ALTER TABLE `estpresent`
   ADD CONSTRAINT `estpresent_ibfk_2` FOREIGN KEY (`identifiant_Personne`) REFERENCES `personne` (`identifiant_Personne`);
 
 --
--- Contraintes pour la table `inscit`
+-- Contraintes pour la table `inscrit`
 --
-ALTER TABLE `inscit`
-  ADD CONSTRAINT `inscit_ibfk_1` FOREIGN KEY (`identifiant_Activite`) REFERENCES `activite` (`identifiant_Activite`),
-  ADD CONSTRAINT `inscit_ibfk_2` FOREIGN KEY (`identifiant_Personne`) REFERENCES `personne` (`identifiant_Personne`);
+ALTER TABLE `inscrit`
+  ADD CONSTRAINT `inscrit_ibfk_1` FOREIGN KEY (`identifiant_Activite`) REFERENCES `activite` (`identifiant_Activite`),
+  ADD CONSTRAINT `inscrit_ibfk_2` FOREIGN KEY (`identifiant_Personne`) REFERENCES `personne` (`identifiant_Personne`);
 
 --
 -- Contraintes pour la table `membre`
@@ -329,11 +329,11 @@ ALTER TABLE `personnel`
   ADD CONSTRAINT `personnel_ibfk_2` FOREIGN KEY (`identifiant_role`) REFERENCES `role` (`identifiant_Role`);
 
 --
--- Contraintes pour la table `sceance`
+-- Contraintes pour la table `seance`
 --
-ALTER TABLE `sceance`
-  ADD CONSTRAINT `sceance_ibfk_1` FOREIGN KEY (`identifiant_Activite`) REFERENCES `activite` (`identifiant_Activite`),
-  ADD CONSTRAINT `sceance_ibfk_2` FOREIGN KEY (`identifiant_Personne`) REFERENCES `personne` (`identifiant_Personne`);
+ALTER TABLE `seance`
+  ADD CONSTRAINT `seance_ibfk_1` FOREIGN KEY (`identifiant_Activite`) REFERENCES `activite` (`identifiant_Activite`),
+  ADD CONSTRAINT `seance_ibfk_2` FOREIGN KEY (`identifiant_Personne`) REFERENCES `personne` (`identifiant_Personne`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
