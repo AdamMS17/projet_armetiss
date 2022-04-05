@@ -2,10 +2,12 @@
 require_once('../vue/Vue.php');
 require_once('../modele/managers/ActiviteManager.php');
 require_once('../modele/Activite.php');
-require_once('../modele/managers/evenementManager.php');
+require_once('../modele/managers/EvenementManager.php');
 require_once('../modele/Evenement.php');
+require_once('../modele/managers/SeanceManager.php');
+require_once('../modele/Seance.php');
 
-const PAGE="testAdmin.php";
+const PAGE = "testAdmin.php";
 
 session_start();
 
@@ -24,8 +26,57 @@ if (!empty($_GET['ajoutActivite'])) {
                 'heureFin' => $_POST['heureFin']
             );
             $a = new Activite($data);
-            $am->insert($a);
-            header("location:".PAGE);
+            $derniereActiviteID = $am->insert($a);
+            /*
+            //________________________________________________________________________________
+            $sm = new SeanceManager;
+            $conversionJoursFrEngl = array(
+                'Lundi' => 'Monday', 'Mardi' => 'Tuesday',
+                'Mercredi' => 'Wednesday', 'Jeudi' => 'Thursday',
+                'Vendredi' => 'Friday', 'Samedi' => 'Saturday',
+                'Dimanche' => 'Sunday'
+            );
+            $conversionJoursEnglEnNum = array(
+                'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3,
+                'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6, 'Sunday' => 7
+            );
+
+            $jourFr = $_POST['jour'];
+            $jourEngl = $conversionJoursFrEngl[$jourFr];
+            $prochainJour = strtotime('next ' . $jourEngl);
+
+            $semaineActuelle = date('W');
+            $semaineProchainJour = date('W', $prochainJour);
+
+
+            $timeslots = array(
+                # Timeslot corresponding to Monday 15:00
+                array('dow' => $conversionJoursEnglEnNum[$jourEngl]),
+            );
+
+            $date = strtotime('today');
+            $end_date = strtotime('30 june 2022');
+            while ($date <= $end_date) {
+                # Convert the loop variable to day of week              
+                $date_dow = date('w', $date);
+
+                foreach ($timeslots as $timeslot) {
+                    # Check if it matches the one in the timeslot
+                    if ($date_dow == $timeslot['dow']) {
+                        $dateSeance = date("D, j M Y H:i", $date);
+                        $s = new Seance(
+                            array(
+                                'identifiant_Activite' => (int)$derniereActiviteID,
+                                'date_Seance' => $dateSeance
+                            )
+                        );
+                        $sm->insert($s);
+                    }
+                }
+                $date += 86400; # advance one day
+            }
+            */
+            header("location:" . PAGE);
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $vue = new Vue('Erreur');
@@ -48,7 +99,7 @@ if (!empty($_GET['ajoutActivite'])) {
             );
             $e = new Evenement($data);
             $em->insert($e);
-            header("location:".PAGE);
+            header("location:" . PAGE);
         } catch (Exception $ex) {
             $msgErreur = $ex->getMessage();
             $vue = new Vue('Erreur');
@@ -70,7 +121,7 @@ if (!empty($_GET['ajoutActivite'])) {
             );
             $a = new Activite($data);
             $am->update($a);
-            header("location:".PAGE);
+            header("location:" . PAGE);
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $vue = new Vue('Erreur');
@@ -81,7 +132,7 @@ if (!empty($_GET['ajoutActivite'])) {
     try {
         $am = new ActiviteManager;
         $am->delete($_GET['suppActivite']);
-        header("location:".PAGE);
+        header("location:" . PAGE);
     } catch (Exception $e) {
         $msgErreur = $e->getMessage();
         $vue = new Vue('Erreur');
@@ -102,8 +153,9 @@ if (!empty($_GET['ajoutActivite'])) {
                 'cout' => $_POST['cout']
             );
             $e = new Evenement($data);
+            $_SESSION['Ev']=$e;
             $em->update($e);
-            header("location:".PAGE);
+            header("location:" . PAGE);
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $vue = new Vue('Erreur');
@@ -114,7 +166,7 @@ if (!empty($_GET['ajoutActivite'])) {
     try {
         $em = new EvenementManager;
         $em->delete($_GET['suppEvenement']);
-        header("location:".PAGE);
+        header("location:" . PAGE);
     } catch (Exception $e) {
         $msgErreur = $e->getMessage();
         $vue = new Vue('Erreur');

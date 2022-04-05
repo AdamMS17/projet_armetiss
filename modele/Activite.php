@@ -50,13 +50,13 @@ class Activite
     public function setHeureDebut($heureDebut)
     {
         $heureDebut = strtotime($heureDebut);
-        $this->heureDebut = gmdate('H:i', $heureDebut);
+        $this->heureDebut = date('H:i', $heureDebut);
     }
 
     public function setHeureFin($heureFin)
     {
         $heureFin = strtotime($heureFin);
-        $this->heureFin = gmdate('H:i', $heureFin);
+        $this->heureFin = date('H:i', $heureFin);
     }
 
     //GETTERS

@@ -17,6 +17,3 @@ function creerSession()
 {
     # code...
 }
-
-
-
