@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 28 mars 2022 à 11:19
+-- Généré le : mer. 06 avr. 2022 à 18:57
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `activite` (
   `jour_Activite` varchar(8) NOT NULL,
   `heureDebut_Activite` time NOT NULL,
   `heureFin_Activite` time NOT NULL,
-  `identifiant_Personne` int(11) NOT NULL
+  `identifiant_Personne` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -45,7 +45,7 @@ CREATE TABLE `activite` (
 CREATE TABLE `estpresent` (
   `identifiant_Activite` int(11) NOT NULL,
   `identifiant_Personne` int(11) NOT NULL,
-  `date_Sceance` date NOT NULL,
+  `date_Seance` date NOT NULL,
   `estPresent` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -73,7 +73,7 @@ CREATE TABLE `evenement` (
 CREATE TABLE `inscrit` (
   `identifiant_Activite` int(11) NOT NULL,
   `identifiant_Personne` int(11) NOT NULL,
-  `montant` int(5) NOT NULL
+  `montant` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -88,7 +88,7 @@ CREATE TABLE `membre` (
   `commentaire_Membre` varchar(500) NOT NULL,
   `actif_Membre` tinyint(1) NOT NULL,
   `inscriptionPaye_Membre` tinyint(1) NOT NULL,
-  `montantCalculer_Membre` int(5) NOT NULL
+  `montantCalculer_Membre` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -100,7 +100,7 @@ CREATE TABLE `membre` (
 CREATE TABLE `paiement` (
   `identifiant_Personne` int(11) NOT NULL,
   `date_Paiement` date NOT NULL,
-  `montant_Paiement` int(5) NOT NULL,
+  `montant_Paiement` float NOT NULL,
   `identifiant_Activite` int(11) DEFAULT NULL,
   `identifiant_Evenement` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -166,7 +166,7 @@ CREATE TABLE `role` (
 
 CREATE TABLE `seance` (
   `identifiant_Activite` int(11) NOT NULL,
-  `date_Sceance` date NOT NULL,
+  `date_Seance` date NOT NULL,
   `identifiant_Personne` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
