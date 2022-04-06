@@ -22,7 +22,8 @@ class ActiviteManager extends DBManager
         $sql = "INSERT INTO activite(nom_Activite,heureDebut_Activite,heureFin_Activite,jour_Activite)
                 VALUES (:nom,:heureDebut,:heureFin,:jour)";
         try {
-            $requete = $this->getConnexion()->prepare($sql);
+            $con = $this->getConnexion();
+            $requete = $con->prepare($sql);
             $nom = $activite->getNom();
             $hd = $activite->getHeureDebut();
             $hf = $activite->getHeureFin();
@@ -32,6 +33,8 @@ class ActiviteManager extends DBManager
             $requete->bindParam(':heureFin', $hf);
             $requete->bindParam(':jour', $jour);
             $requete->execute();
+
+            return $con->lastInsertId();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
             $this->_vue = new Vue('Erreur');
