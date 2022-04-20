@@ -12,7 +12,7 @@ class totalPayement extends DBManager
             $requete = $con->prepare($sql);
             $requete->execute();
             $res = $requete->fetch();
-            return $res;
+            return $res[0];
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
             $this->_vue = new Vue('Erreur');
@@ -20,5 +20,4 @@ class totalPayement extends DBManager
         } 
     }
 }
-
 ?>
