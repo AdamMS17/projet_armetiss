@@ -21,7 +21,8 @@ class totalPayement extends DBManager
             $this->_vue->generer(array('msgErreur' => $msgErreur));
         }
         if ($verif<1) {
-            echo("Pas de paiement(s) de la part de cet utilisateur");
+            $retourErreur="Aucun payement pour cet utilisateur n'a été trouvé.";
+            return $retourErreur;
         }
         else {
             return $res[0];
