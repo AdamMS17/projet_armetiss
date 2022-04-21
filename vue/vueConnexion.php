@@ -1,38 +1,26 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styleConnexion.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <title>Connection</title>
-</head>
-<body>
-  
-
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-      
-    <div class="fadeIn first">
-      <img src="../images/Logo_Armetiss.png" id="icon" alt="Armetiss" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <img class="img-fluid mx-auto d-block" src="../images/Logo_Armetiss.png" id="icon" alt="Armetiss"
+                width="50%" />
+        </div>
     </div>
-
-    
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Identifiant">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Mot de passe">
-      <input type="submit" class="fadeIn fourth" value="Se connecter">
-    </form>
-
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Mot de passe oublié?</a>
-    </div>
-
-  </div>
 </div>
 
-</body>
-</html>
+<form>
+    <!-- <div class="row">
+        <div class="col">
+            <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="password" id="mdp" name="mdp" placeholder="Mot de passe">
+            </div>
+        </div>
+
+    </div> -->
+
+    
+    <input class="btn btn-primary" type="submit" value="Se connecter">
+</form>
+<a href="#">Mot de passe oublié?</a>
