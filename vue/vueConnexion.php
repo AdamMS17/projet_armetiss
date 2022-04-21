@@ -1,20 +1,26 @@
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-      
-    <div class="fadeIn first">
-      <img src="../images/Logo_Armetiss.png" id="icon" alt="Armetiss" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <img class="img-fluid mx-auto d-block" src="../images/Logo_Armetiss.png" id="icon" alt="Armetiss"
+                width="50%" />
+        </div>
     </div>
+</div>
+
+<form>
+    <!-- <div class="row">
+        <div class="col">
+            <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="password" id="mdp" name="mdp" placeholder="Mot de passe">
+            </div>
+        </div>
+
+    </div> -->
 
     
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Identifiant">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Mot de passe">
-      <input type="submit" class="fadeIn fourth" value="Se connecter">
-    </form>
-
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Mot de passe oublié?</a>
-    </div>
-
-  </div>
-</div>
+    <input class="btn btn-primary" type="submit" value="Se connecter">
+</form>
+<a href="#">Mot de passe oublié?</a>
