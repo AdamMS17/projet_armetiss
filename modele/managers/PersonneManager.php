@@ -24,7 +24,7 @@ class PersonneManager extends DBManager
             $requete->bindParam(':email', $personne->getEmail());
             $requete->execute();
             $id = $cnx->lastInsertId();
-            $personne->setIdentifiant() = $id;
+            $personne->setIdentifiant($id);
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
             $this->_vue = new Vue('Erreur');
