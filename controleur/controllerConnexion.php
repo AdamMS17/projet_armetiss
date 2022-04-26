@@ -1,6 +1,7 @@
 <?php 
 
 require "../modele/PersonneManager.php";
+session_start();
 
 function verifierConnexion($identifiant,$mdp)
 {
@@ -17,6 +18,7 @@ function verifierConnexion($identifiant,$mdp)
 
 /*****************************************************/
 
+// sans router 
 if (isset($_SESSION["sessionUtilisateur"])) {
     // pas complet ?  
     header("Location : ");
@@ -33,6 +35,7 @@ if (isset($_POST["submitConnexion"])
     
     if($personne){
         $_SESSION["sessionUtilisateur"] = $personne;
+        header("Location : login");
     }
 
 

@@ -8,7 +8,7 @@
 </div>
 
 <form>
-    <!-- <div class="row">
+    <div class="row">
         <div class="col">
             <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">
         </div>
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-    </div> -->
+    </div>
 
     
     <input class="btn btn-primary" type="submit" value="Se connecter">
