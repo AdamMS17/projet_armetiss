@@ -1,20 +1,21 @@
 <?php
 require_once('DBManager.php');
-class PersonnelManager extends DBManager
+class RoleManager extends DBManager
 {
 
     public function __construct()
     {
     }
 
-    function insert(Personnel $personnel)
+    function insert(Role $role)
     {
         try {
             $cnx=$this->getConnexion();
-            $requete =  $cnx->prepare("INSERT INTO personnel(identifiant_Personne,identifiant_Role) VALUES (:personne,:role)");
-            $requete->bindParam(':personne', $personnel->getId());
-            $requete->bindParam(':role', $personnel->getRole());
+            $requete =  $cnx->prepare("INSERT INTO role (nom_Role) VALUES (:nom)");
+            $requete->bindParam(':nom', $role->getRole());
             $requete->execute();
+            $id = $cnx->lastInsertId();
+            $role->setIdentifiant($id);
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
             $this->_vue = new Vue('Erreur');
@@ -24,13 +25,13 @@ class PersonnelManager extends DBManager
         }
     }
 
-    function update(Personnel $personnel)
+    function update(Role $role)
     {
         try{
             $cnx=$this->getConnexion();
-            $requete =  $cnx->prepare("UPDATE personnel SET identifiant_Role=:role WHERE id=:id ");
-            $requete->bindParam(':role', $personnel->getRole());
-            $requete->bindParam(':id', $personnel->getId());
+            $requete =  $cnx->prepare("UPDATE role SET nom_Role=:nom WHERE id=:id ");
+            $requete->bindParam(':nom', $role->getRole());
+            $requete->bindParam(':id', $role->getId());
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
@@ -45,7 +46,7 @@ class PersonnelManager extends DBManager
     {
         try{
             $cnx=$this->getConnexion();
-            $requete=$cnx->prepare("DELETE FROM personnel WHERE id_personne=:id");
+            $requete=$cnx->prepare("DELETE FROM personne WHERE id_personne=:id");
             $requete->bindParam(':id', $id);
             $requete->execute();
         } catch (PDOException $e) {
@@ -56,23 +57,22 @@ class PersonnelManager extends DBManager
             $requete->closeCursor();
         }
     }
-    function getPersonnels()
+    function getRoles()
     {
         $cnx=$this->getConnexion();
-        return $this->getAll('personnel', 'Personnel');
+        return $this->getAll('role', 'Role');
     }
-    function getPersonnel(int $id)
+    function getRole(int $id)
     {
         $this->getConnexion();
-        return $this->getByIdName('personnel', 'Personnel', $id, 'identifiant_Personne');
+        return $this->getByIdName('role', 'Role', $id, 'identifiant_Role');
     }
-
-    function Exist(int $id){
+    function Exist(String $role){
         try{
 
             $cnx=$this->getConnexion();
-            $requete = $cnx->prepare("SELECT * FROM personnel WHERE id_Personne=:id");
-            $requete->bindParam(':id', $id);
+            $requete = $cnx->prepare("SELECT * FROM role WHERE nom_Role=:role");
+            $requete->bindParam(':role', $role);
 		    $requete->execute();
 		    $tbResult = $requete->fetch();
 

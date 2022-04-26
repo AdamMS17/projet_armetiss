@@ -34,7 +34,7 @@ class PersonneManager extends DBManager
         }
     }
 
-    function update(Personne $Personne)
+    function update(Personne $personne)
     {
         try{
             $cnx=$this->getConnexion();
@@ -87,13 +87,15 @@ class PersonneManager extends DBManager
     
     function login(String $login,String $mdp){
         try{
+
             $cnx=$this->getConnexion();
-            $requete = $cnx->prepare("SELECT * FROM utilisateur WHERE identifiant=:login AND mdp=:mdp");
+            $requete = $cnx->prepare("SELECT * FROM personne WHERE login_Personne=:login AND motDePasse_Personne=:mdp");
             $requete->bindParam(':login', $login);
             $requete->bindParam(':mdp', $mdp);
             $requete->execute();
             $tbResult = $requete->fetch();
             return $tbResult;
+
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
             $this->_vue = new Vue('Erreur');
@@ -101,30 +103,26 @@ class PersonneManager extends DBManager
         } finally {
             $requete->closeCursor();
         }
-    }/*
-    function getUtilisateurByLogin(String $login){
-        $scoreQuizzManager= new ScoreQuizzManager();
-        $db = new DBManager();
-        $cnx = $db->connexionDB($db);
-        $requete =  $cnx->prepare("SELECT * FROM utilisateur WHERE identifiant=:login");
-        $requete->bindParam(':login', $login);
-        $requete->execute();
-        $resultat = $requete->fetch();
-        $utilisateur= new Utilisateur($resultat['id'],$resultat['nom'],$resultat['prenom'],$resultat['mdp'],$resultat['identifiant'],$resultat['admin']);
-        $utilisateur->essai=count($scoreQuizzManager->getAllByPlayer($resultat['id']));
-        $utilisateur->score=$scoreQuizzManager->score($resultat['id']);
-        return $utilisateur;
     }
-    function isExist(String $login){
-        $db = new DBManager();
-        $cnx = $db->connexionDB($db);
-        $requete = $cnx->prepare("SELECT * FROM utilisateur WHERE identifiant=:login");
-        $requete->bindParam(':login', $login);
-		$requete->execute();
-		$tbResult = $requete->fetch();
-		$userexist = $requete->rowCount();
 
-        return $userexist>=1;
-    }*/
+    function Exist(String $login){
+        try{
+
+            $cnx=$this->getConnexion();
+            $requete = $cnx->prepare("SELECT * FROM personne WHERE login_Personne=:login");
+            $requete->bindParam(':login', $login);
+		    $requete->execute();
+		    $tbResult = $requete->fetch();
+
+            return $tbResult;
+
+        } catch (PDOException $e) {
+            $msgErreur = $e->getMessage();
+            $this->_vue = new Vue('Erreur');
+            $this->_vue->generer(array('msgErreur' => $msgErreur));
+        } finally {
+            $requete->closeCursor();
+        }
+    }
 }
 ?>
