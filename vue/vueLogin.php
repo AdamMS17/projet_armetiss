@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-6">
-            <img class="img-fluid mx-auto d-block" src="../images/Logo_Armetiss.png" id="icon" alt="Armetiss"
+            <img class="img-fluid mx-auto d-block" src="images/Logo_Armetiss.png" id="icon" alt="Armetiss"
                 width="50%" />
         </div>
     </div>

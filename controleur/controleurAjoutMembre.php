@@ -14,7 +14,7 @@
             return "*Pseudo doit avoir min 4 caractères et max 16 caractères et doit contenir une lettre au majuscule";
 
 
-        // tester si pseudo membre existe deja 
+        // tester si pseudo membre existe deja
 
         // $utiTest = new Utilisateur($pseudo,"","");
         // if ($utiTest->checkPseudo()) {
