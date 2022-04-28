@@ -31,7 +31,7 @@ class listerImpayes extends DBManager
             $this->_vue->generer(array('msgErreur' => $msgErreur));   
         }
 
-        if ($impayes==true) {                      //si le boolean est true, execute l'affichage
+        if ($impayes==true) {                      //si le boolean est true, execute l'affichage. il et true s'il trouve des impayes
             foreach ($impayes as $key => $value) {
                 echo($impayes[0]);
                 echo("\t");
@@ -39,6 +39,9 @@ class listerImpayes extends DBManager
                 echo("<br>");
             }
             //l'affichage est bug pour le moment, a corriger après
+        }
+        else{
+            echo "Tout le monde est en ordre pour cette activité";
         }
     }
 }
