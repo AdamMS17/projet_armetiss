@@ -32,16 +32,25 @@ class listerImpayes extends DBManager
         }
 
         if ($impayes==true) {                      //si le boolean est true, execute l'affichage. il et true s'il trouve des impayes
-            foreach ($impayes as $key => $value) {
-                echo($impayes[0]);
+            foreach ($impayes as $key) {
+                $sqlAffichage="SELECT nom_Personne,prenom_Personne FROM personne WHERE identifiant_Personne= ? ";
+                $con = $this->getConnexion();
+                $affichageNom=$con()->prepare($sqlAffichage);
+                $affichageNom->execute([$key[0]]);//on passe l'id des impayés
+                $affichage=$affichageNom->fetchAll();
+                foreach($affichage as $personne){
+                    echo($personne[0]);           //affichage des noms
+                    echo ("\t");
+                    echo($personne[1]);           //affichage des prénoms
+                }
                 echo("\t");
-                echo($impayes[1]);
+                echo($key[1]);
                 echo("<br>");
             }
             //l'affichage est bug pour le moment, a corriger après
         }
         else{
-            echo "Tout le monde est en ordre pour cette activité";
+            echo "Tout le monde est en ordre pour cette activité!";
         }
     }
 }
