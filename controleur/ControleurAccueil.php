@@ -101,7 +101,7 @@ class ControleurAccueil
                     $date += 86400; # advance one day
                 }
 
-                header("location:" . URL . "accueil");
+                header("location:" . URL);
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -129,7 +129,7 @@ class ControleurAccueil
                 $am->update($a);
 
 
-                header("location:" . URL . "accueil");
+                header("location:" . URL);
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -144,7 +144,7 @@ class ControleurAccueil
             $am = new ActiviteManager;
             $am->delete($_GET['suppActivite']);
 
-            header("location:" . URL . "accueil");
+            header("location:" . URL);
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $_vue = new Vue('Erreur');
@@ -169,7 +169,7 @@ class ControleurAccueil
                 $e = new Evenement($data);
                 $em->insert($e);
 
-                header("location:" . URL . "accueil");
+                header("location:" . URL);
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -197,7 +197,7 @@ class ControleurAccueil
                 $_SESSION['Ev'] = $e;
                 $em->update($e);
 
-                header("location:" . URL . "accueil");
+                header("location:" . URL);
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -213,7 +213,7 @@ class ControleurAccueil
             $em = new EvenementManager;
             $em->delete($_GET['suppEvenement']);
 
-            header("location:" . URL . "accueil");
+            header("location:" . URL);
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $_vue = new Vue('Erreur');
