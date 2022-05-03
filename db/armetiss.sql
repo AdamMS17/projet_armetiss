@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 06 avr. 2022 à 18:57
+-- Généré le : mar. 03 mai 2022 à 10:07
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.0
 
@@ -136,6 +136,13 @@ CREATE TABLE `personne` (
   `email_Personne` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `personne`
+--
+
+INSERT INTO `personne` (`identifiant_Personne`, `login_Personne`, `nom_Personne`, `prenom_Personne`, `motDePasse_Personne`, `ville_Personne`, `rue_Personne`, `numero_Personne`, `numeroTel_Personne`, `dateNaiss_Personne`, `email_Personne`) VALUES
+(1, 'Admin', 'Admin', 'Admin', 'Admin', 'Admin', 'Admin', 0, '0000000000', '2022-05-01', 'Admin@Admin.be');
+
 -- --------------------------------------------------------
 
 --
@@ -147,6 +154,13 @@ CREATE TABLE `personnel` (
   `identifiant_role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `personnel`
+--
+
+INSERT INTO `personnel` (`identifiant_Personne`, `identifiant_role`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -157,6 +171,13 @@ CREATE TABLE `role` (
   `identifiant_Role` int(11) NOT NULL,
   `nom_Role` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `role`
+--
+
+INSERT INTO `role` (`identifiant_Role`, `nom_Role`) VALUES
+(1, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -268,13 +289,13 @@ ALTER TABLE `evenement`
 -- AUTO_INCREMENT pour la table `personne`
 --
 ALTER TABLE `personne`
-  MODIFY `identifiant_Personne` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `identifiant_Personne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `role`
 --
 ALTER TABLE `role`
-  MODIFY `identifiant_Role` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `identifiant_Role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
@@ -332,7 +353,7 @@ ALTER TABLE `personnel`
 -- Contraintes pour la table `seance`
 --
 ALTER TABLE `seance`
-  ADD CONSTRAINT `seance_ibfk_1` FOREIGN KEY (`identifiant_Activite`) REFERENCES `activite` (`identifiant_Activite`),
+  ADD CONSTRAINT `seance_ibfk_1` FOREIGN KEY (`identifiant_Activite`) REFERENCES `activite` (`identifiant_Activite`) ON DELETE CASCADE,
   ADD CONSTRAINT `seance_ibfk_2` FOREIGN KEY (`identifiant_Personne`) REFERENCES `personne` (`identifiant_Personne`);
 COMMIT;
 
