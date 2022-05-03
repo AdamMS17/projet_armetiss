@@ -1,16 +1,16 @@
 <?php
-require_once('vue/Vue.php');
-require_once('modele/Personne.php');
-require_once('modele/managers/PersonneManager.php');
-
 class ControleurLogin
 {
     private $_personneManager;
     private $_vue;
 
-    public function __construct()
+    public function __construct($url)
     {
+        if (isset($url) && count($url) > 1)
+            throw new Exception('Page introuvable');
+        else {
             $this->login();
+        }
     }
 
     private function login()

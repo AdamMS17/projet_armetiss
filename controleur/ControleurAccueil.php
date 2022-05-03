@@ -1,38 +1,35 @@
 <?php
-require_once('vue/Vue.php');
-require_once('modele/managers/ActiviteManager.php');
-require_once('modele/Activite.php');
-require_once('modele/managers/EvenementManager.php');
-require_once('modele/Evenement.php');
-require_once('modele/managers/SeanceManager.php');
-require_once('modele/Seance.php');
-
 class ControleurAccueil
 {
     private $_vue;
 
-    public function __construct()
+    public function __construct($url)
     {
-        //if (isset($_SESSION['utilisateur'])) {
+        //Je ne veux qu'un parametre dans l'url
+        if (isset($url) && count($url) > 1)
+            throw new Exception('Page introuvable');
+        else {
+            //if (isset($_SESSION['utilisateur'])) {
 
             //todo menu
 
             //if ($_SESSION['utilisateur']->isAdmin()) {
-                if (!empty($_GET['ajoutActivite'])) {
-                    $this->ajoutActivite();
-                } else if (!empty($_GET['ajoutEvenement'])) {
-                    $this->ajoutEvenement();
-                } else if (!empty($_GET['modActivite'])) {
-                    $this->modifActivite();
-                } else if (!empty($_GET['modEvenement'])) {
-                    $this->modifEvenement();
-                } else if (!empty($_GET['suppActivite'])) {
-                    $this->suppActivite();
-                } else if (!empty($_GET['suppEvenement'])) {
-                    $this->suppEvenement();
-                } else $this->accueilAdmin();
+            if (!empty($_GET['ajoutActivite'])) {
+                $this->ajoutActivite();
+            } else if (!empty($_GET['ajoutEvenement'])) {
+                $this->ajoutEvenement();
+            } else if (!empty($_GET['modActivite'])) {
+                $this->modifActivite();
+            } else if (!empty($_GET['modEvenement'])) {
+                $this->modifEvenement();
+            } else if (!empty($_GET['suppActivite'])) {
+                $this->suppActivite();
+            } else if (!empty($_GET['suppEvenement'])) {
+                $this->suppEvenement();
+            } else $this->accueilAdmin();
             //}
-        //} else $this->login();
+            //} else $this->login();
+        }
     }
 
     public function login()
@@ -58,55 +55,53 @@ class ControleurAccueil
                 $derniereActiviteID = $am->insert($a);
 
                 $sm = new SeanceManager;
-            $conversionJoursFrEngl = array(
-                'Lundi' => 'Monday', 'Mardi' => 'Tuesday',
-                'Mercredi' => 'Wednesday', 'Jeudi' => 'Thursday',
-                'Vendredi' => 'Friday', 'Samedi' => 'Saturday',
-                'Dimanche' => 'Sunday'
-            );
-            $conversionJoursEnglEnNum = array(
-                'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3,
-                'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6, 'Sunday' => 7
-            );
+                $conversionJoursFrEngl = array(
+                    'Lundi' => 'Monday', 'Mardi' => 'Tuesday',
+                    'Mercredi' => 'Wednesday', 'Jeudi' => 'Thursday',
+                    'Vendredi' => 'Friday', 'Samedi' => 'Saturday',
+                    'Dimanche' => 'Sunday'
+                );
+                $conversionJoursEnglEnNum = array(
+                    'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3,
+                    'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6, 'Sunday' => 7
+                );
 
-            $jourFr = $_POST['jour'];
-            $jourEngl = $conversionJoursFrEngl[$jourFr];
-            $prochainJour = strtotime('next ' . $jourEngl);
+                $jourFr = $_POST['jour'];
+                $jourEngl = $conversionJoursFrEngl[$jourFr];
+                $prochainJour = strtotime('next ' . $jourEngl);
 
-            $semaineActuelle = date('W');
-            $semaineProchainJour = date('W', $prochainJour);
+                $semaineActuelle = date('W');
+                $semaineProchainJour = date('W', $prochainJour);
 
 
-            $timeslots = array(
-                # Timeslot corresponding to Monday 15:00
-                array('dow' => $conversionJoursEnglEnNum[$jourEngl]),
-            );
+                $timeslots = array(
+                    # Timeslot corresponding to Monday 15:00
+                    array('dow' => $conversionJoursEnglEnNum[$jourEngl]),
+                );
 
-            $date = strtotime('today');
-            $end_date = strtotime('30 june 2022');
-            while ($date <= $end_date) {
-                # Convert the loop variable to day of week              
-                $date_dow = date('w', $date);
+                $date = strtotime('today');
+                $end_date = strtotime('30 june 2022');
+                while ($date <= $end_date) {
+                    # Convert the loop variable to day of week              
+                    $date_dow = date('w', $date);
 
-                foreach ($timeslots as $timeslot) {
-                    # Check if it matches the one in the timeslot
-                    if ($date_dow == $timeslot['dow']) {
-                        $dateSeance = date("D, j M Y H:i", $date);
-                        $s = new Seance(
-                            array(
-                                'identifiant_Activite' => (int)$derniereActiviteID,
-                                'date_Seance' => $dateSeance
-                            )
-                        );
-                        $sm->insert($s);
+                    foreach ($timeslots as $timeslot) {
+                        # Check if it matches the one in the timeslot
+                        if ($date_dow == $timeslot['dow']) {
+                            $dateSeance = date("D, j M Y H:i", $date);
+                            $s = new Seance(
+                                array(
+                                    'identifiant_Activite' => (int)$derniereActiviteID,
+                                    'date_Seance' => $dateSeance
+                                )
+                            );
+                            $sm->insert($s);
+                        }
                     }
+                    $date += 86400; # advance one day
                 }
-                $date += 86400; # advance one day
-            }
-            
-                //todo redirection
 
-
+                header("location:" . URL . "accueil");
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -134,8 +129,7 @@ class ControleurAccueil
                 $am->update($a);
 
 
-                //todo redirection
-
+                header("location:" . URL . "accueil");
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -150,8 +144,7 @@ class ControleurAccueil
             $am = new ActiviteManager;
             $am->delete($_GET['suppActivite']);
 
-            //todo redirection
-
+            header("location:" . URL . "accueil");
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $_vue = new Vue('Erreur');
@@ -176,10 +169,7 @@ class ControleurAccueil
                 $e = new Evenement($data);
                 $em->insert($e);
 
-
-                //todo redirection
-
-
+                header("location:" . URL . "accueil");
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -207,9 +197,7 @@ class ControleurAccueil
                 $_SESSION['Ev'] = $e;
                 $em->update($e);
 
-                //todo redirection
-
-
+                header("location:" . URL . "accueil");
             } catch (Exception $e) {
                 $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
@@ -225,9 +213,7 @@ class ControleurAccueil
             $em = new EvenementManager;
             $em->delete($_GET['suppEvenement']);
 
-            //todo redirection  
-
-
+            header("location:" . URL . "accueil");
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $_vue = new Vue('Erreur');
