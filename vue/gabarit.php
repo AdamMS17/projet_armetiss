@@ -30,7 +30,8 @@
     <script src="bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.5/datatables.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- Faire en sorte que le script a chargé differe de la page  -->
+    <script src="scripts/scriptResponsableCRUD.js"></script>
 
 </body>
 
