@@ -32,6 +32,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Faire en sorte que le script a chargé differe de la page  -->
     <script src="scripts/scriptResponsableCRUD.js"></script>
+    <script src="scripts/scriptAnimateurCRUD.js"></script>
 
 </body>
 
