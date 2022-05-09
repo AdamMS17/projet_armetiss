@@ -3,11 +3,19 @@ class Personnel{
     private $identifiantPersonne;
     private $identifiantRole;
 
-    public function __construct(int $identifiantPersonne,int $identifiantRole)
-    {
-        $this->identifiantPersonne = $identifiantPersonne;
-        $this->identifiantRole = $identifiantRole;
-    }
+    public function __construct(array $data)
+        {
+            $this->hydrate($data);
+        }
+
+        public function hydrate(array $data)
+        {
+            foreach ($data as $key => $value) {
+                $method = 'set' . ucfirst($key);
+                if (method_exists($this, $method))
+                    $this->$method($value);
+            }
+        }
     //setter
     public function setIdentifiant($identifiantPersonne)
     {
@@ -29,11 +37,11 @@ class Personnel{
     //getter
     public function getId()
     {
-        return $this->identifiantPersonne;
+        return $this->identifiant_Personne;
     }
     public function getRole()
     {
-       return $this->identifiantRole;
+       return $this->identifiant_Role;
     }
 }
 

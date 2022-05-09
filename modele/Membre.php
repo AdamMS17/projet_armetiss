@@ -9,14 +9,18 @@ class Membre
     private $inscriptionPayeMembre;
     private $montantCalculerMembre;
    
-    public function __construct(int $identifiantPersonne,String $numeroTel2Membre,String $commentaireMembre,int $actifMembre,int $inscriptionPayeMembre,int $montantCalculerMembre)
+    public function __construct(array $data)
     {
-        $this->identifiantPersonne = $identifiantPersonne;
-        $this->numeroTel2Membre = $numeroTel2Membre;
-        $this->commentaireMembre = $commentaireMembre;
-        $this->actifMembre = $actifMembre;
-        $this->inscriptionPayeMembre = $inscriptionPayeMembre;
-        $this->montantCalculerMembre = $montantCalculerMembre;
+        $this->hydrate($data);
+    }
+
+    public function hydrate(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method))
+                $this->$method($value);
+        }
     }
     //setter
     public function setIdentifiant($identifiantPersonne)
@@ -62,27 +66,27 @@ class Membre
     //getter
     public function getId()
     {
-      return $this->identifiantPersonne;
+      return $this->identifiant_Personne;
     }
     public function getNumTel2()
     {
-      return $this->numeroTel2Membre;
+      return $this->numeroTel2_Membre;
     }
     public function getCom()
     {
-        return $this->commentaireMembre;
+        return $this->commentaire_Membre;
     } 
     public function getActif()
     {
-        return $this->actifMembre;
+        return $this->actif_Membre;
     }
     public function getInscriptionPaye()
     {
-        return $this->inscriptionPayeMembre;
+        return $this->inscriptionPaye_Membre;
     }
     public function getMontant()
     {
-        return $this->montantCalculerMembre;
+        return $this->montantCalculer_Membre;
     }
 }
 ?>

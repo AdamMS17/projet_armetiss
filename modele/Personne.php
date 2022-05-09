@@ -12,20 +12,22 @@
         private $dateNaissPersonne;
         private $emailPersonne;
 
-        public function __construct(int $identifiantPersonne,String $loginPersonne,String $nomPersonne,String $prenomPersonne,String $motDePassePersonne,String $villePersonnne,String $ruePersonne,int $numeroPersonne,String $numeroTelPersonne,String $dateNaissPersonne,String $emailPersonne){
-                $this->identifiantPersonne = $identifiantPersonne; //identifiant DB
-                $this->loginPersonne = $loginPersonne; //login se connecter
-                $this->nomPersonne = $nomPersonne;
-                $this->prenomPersonne = $prenomPersonne;
-                $this->motDePassePersonne = $motDePassePersonne;
-                $this->villePersonnne = $villePersonnne;
-                $this->ruePersonne = $ruePersonne;
-                $this->numeroPersonne = $numeroPersonne;
-                $this->numeroTelPersonne = $numeroTelPersonne;
-                $this->dateNaissPersonne = $dateNaissPersonne;
-                $this->emailPersonne = $emailPersonne;
+        public function __construct(array $data)
+        {
+            $this->hydrate($data);
         }
+
+        public function hydrate(array $data)
+        {
+            foreach ($data as $key => $value) {
+                $method = 'set' . ucfirst($key);
+                if (method_exists($this, $method))
+                    $this->$method($value);
+            }
+        }
+
         //setter
+        
         public function setIdentifiant($identifiantPersonne)
         {
         $id = (int) $identifiantPersonne;
@@ -90,47 +92,47 @@
         //getter
     public function getId()
     {
-        return $this->identifiantPersonne;
+        return $this->identifiant_Personne;
     }
     public function getNom()
     {
-        return $this->nomPersonne;
+        return $this->nom_Personne;
     }
     public function getLogin()
     {
-        return $this->loginPersonne;
+        return $this->login_Personne;
     }
     public function getPrenom()
     {
-        return $this->prenomPersonne;
+        return $this->prenom_Personne;
     }
     public function getMDP()
     {
-        return $this->motDePassePersonne;
+        return $this->motDePasse_Personne;
     }
     public function getVille()
     {
-        return $this->villePersonnne;
+        return $this->ville_Personnne;
     }
     public function getRue()
     {
-        return $this->ruePersonne;
+        return $this->rue_Personne;
     }
     public function getNumero()
     {
-        return $this->numeroPersonne;
+        return $this->numero_Personne;
     }
     public function getNumeroTel()
     {
-        return $this->numeroTelPersonne;
+        return $this->numeroTel_Personne;
     }
     public function getDateNaiss()
     {
-        return $this->dateNaissPersonne;
+        return $this->dateNaiss_Personne;
     }
     public function getEmail()
     {
-        return $this->emailPersonne;
+        return $this->email_Personne;
     }
 }
 ?>
