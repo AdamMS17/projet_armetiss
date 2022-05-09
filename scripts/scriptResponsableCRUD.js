@@ -11,6 +11,8 @@ $(function() {
                 type: 'post',
                 data: formResponsable.serialize() + '&action=create',
                 success: function (response) {
+                    console.log(response)
+
                     $('#createModal').modal('hide');
                     Swal.fire({
                         icon: 'success',
@@ -22,4 +24,20 @@ $(function() {
             })
         }
     })
+
+    //recup les responsables 
+    getResponsables()
+    function getResponsables() {
+        $.ajax({
+            url : 'controleur/process.php',
+            type : 'post',
+            data : { action: 'fetch'},
+            success : function (response) {
+                $('#responsableTable').html(response);
+                $('table').DataTable();
+            }
+        })
+    }
+
+
 } )
