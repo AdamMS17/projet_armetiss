@@ -15,10 +15,11 @@ if (isset($_POST['action']) && $_POST['action'] === 'create') {
     $personneMan = new PersonneManager();
     $personnelMan = new PersonnelManager();
    
+    
+
 
     $nvPersonne = new Personne(0,$login,$nom,$prenom,$mdp,$ville,$rue,(int)$numero,$numtel,$datenaissance,$email);
     $personneMan->insert($nvPersonne);
-
 
     $responsable = new Personnel($nvPersonne->getId(),1);
 

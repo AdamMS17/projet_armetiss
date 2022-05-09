@@ -13,10 +13,10 @@
 
     $personnes = $manPersonnes->getPersonnes();
 
-
+    // var_dump($personnes);
 
     foreach ($personnes as $personne) {
-        echo $personne->getNom();
+        echo $personne->getId().'<br>';
 
     }
 

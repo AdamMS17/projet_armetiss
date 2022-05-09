@@ -1,5 +1,5 @@
 $(function() {
-    $('table').DataTable();
+    $('#tableResponsable').DataTable();
 
     //creer un responsable
     $('#ajouterResponsable').on('click',function (e) {
@@ -34,7 +34,7 @@ $(function() {
             data : { action: 'fetch'},
             success : function (response) {
                 $('#responsableTable').html(response);
-                $('table').DataTable();
+                $('#tableResponsable').DataTable();
             }
         })
     }
