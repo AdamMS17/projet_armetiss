@@ -13,11 +13,14 @@
 
     $personnes = $manPersonnes->getPersonnes();
 
-    // var_dump($personnes);
+     //var_dump($personnes);
 
     foreach ($personnes as $personne) {
-        echo $personne->getId().'<br>';
-
+        echo $personne->getDateNaiss()."<br>";
     }
+
+
+
+
 
 ?>

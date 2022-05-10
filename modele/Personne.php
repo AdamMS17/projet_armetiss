@@ -1,17 +1,17 @@
 <?php
     class Personne{
-        private $identifiantPersonne;
-        private $loginPersonne;
-        private $nomPersonne;
-        private $prenomPersonne;
-        private $motDePassePersonne;
-        private $villePersonnne;
-        private $ruePersonne;
-        private $numeroPersonne;
-        private $numeroTelPersonne;
-        private $dateNaissPersonne;
-        private $emailPersonne;
-
+        private $identifiant_Personne ;
+        private $login_Personne ;
+        private $nom_Personne ;
+        private $prenom_Personne ;
+        private $motDePasse_Personne ;
+        private $ville_Personne ;
+        private $rue_Personne ;
+        private $numero_Personne ;
+        private $numeroTel_Personne ;
+        private $dateNaiss_Personne ;
+        private $email_Personne ;
+        
         public function __construct(array $data)
         {
             $this->hydrate($data);
@@ -28,65 +28,65 @@
 
         //setter
         
-        public function setIdentifiant($identifiantPersonne)
+        public function setIdentifiant_Personne($identifiantPersonne)
         {
         $id = (int) $identifiantPersonne;
 
             if ($id > 0)
-            $this->identifiantPersonne = $id;
+            $this->identifiant_Personne = $id;
         }
 
-        public function setNom($nomPersonne)
+        public function setNom_Personne($nomPersonne)
         {
             if (is_string($nomPersonne))
-                $this->nomPersonne = $nomPersonne;
+                $this->nom_Personne = $nomPersonne;
         }
-        public function setLogin($loginPersonne)
+        public function setLogin_Personne($loginPersonne)
         {
             if (is_string($loginPersonne))
-                $this->loginPersonne = $loginPersonne;
+                $this->login_Personne = $loginPersonne;
         }
     
-        public function setPrenom($prenomPersonne)
+        public function setPrenom_Personne($prenomPersonne)
         {
             if (is_string($prenomPersonne))
-                $this->prenomPersonne = $prenomPersonne;
+                $this->prenom_Personne = $prenomPersonne;
         }
     
-        public function setMDP($motDePassePersonne)
+        public function setMotDePasse_Personne($motDePassePersonne)
         {
             if (is_string($motDePassePersonne))
-                $this->motDePassePersonne = $motDePassePersonne;
+                $this->motDePasse_Personne = $motDePassePersonne;
         }
-        public function setVille($villePersonnne)
+        public function setVille_Personne($villePersonnne)
         {
             if (is_string($villePersonnne))
-                $this->villePersonnne = $villePersonnne;
+                $this->ville_Personne = $villePersonnne;
         }
-        public function setRue($ruePersonne)
+        public function setRue_Personne($ruePersonne)
         {
             if (is_string($ruePersonne))
-                $this->ruePersonne = $ruePersonne;
+                $this->rue_Personne = $ruePersonne;
         }
-        public function setNumero($numeroPersonne)
+        public function setNumero_Personne($numeroPersonne)
         {
             if (is_string($numeroPersonne))
-                $this->numeroPersonne = $numeroPersonne;
+                $this->numero_Personne = $numeroPersonne;
         }
-        public function setNumeroTel($numeroTelPersonne)
+        public function setNumeroTel_Personne($numeroTelPersonne)
         {
             if (is_string($numeroTelPersonne))
-                $this->numeroTelPersonne = $numeroTelPersonne;
+                $this->numeroTel_Personne = $numeroTelPersonne;
         }
-        public function setDateNaiss($dateNaissPersonne)
+        public function setDateNaiss_Personne($dateNaissPersonne)
         {
             if (is_string($dateNaissPersonne))
-                $this->dateNaissPersonne = $dateNaissPersonne;
+                $this->dateNaiss_Personne = $dateNaissPersonne;
         }
-        public function setEmail($emailPersonne)
+        public function setEmail_Personne($emailPersonne)
         {
             if (is_string($emailPersonne))
-                $this->emailPersonne = $emailPersonne;
+                $this->email_Personne = $emailPersonne;
         }
 
         //getter
