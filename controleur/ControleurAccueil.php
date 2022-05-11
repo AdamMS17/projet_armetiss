@@ -45,7 +45,18 @@ class ControleurAccueil
                 $this->suppActivite();
             } else if (!empty($_GET['suppEvenement'])) {
                 $this->suppEvenement();
-            } else if (!empty($_GET['ajoutMembre'])) {
+            }
+            
+            /*else if (!empty($_GET['ajoutAnimateur'])) {
+                $this->ajouterAnimateur();
+            }else if (!empty($_GET['ajoutResponsable'])) {
+                $this->ajouterResponsable();
+            }else if (!empty($_GET['ajoutAdmin'])) {
+                $this->ajouterAdmin();
+            }*/
+
+            //todo Separation RESPONSABLE
+            else if (!empty($_GET['ajoutMembre'])) {
                 $this->ajouterMembre();
             }else if (!empty($_GET['enregistrementPaiement'])) {
                 $this->enregistrerPaiement();
@@ -250,6 +261,29 @@ class ControleurAccueil
             $_vue = new Vue('Erreur');
             $_vue->generer(array('msgErreur' => $msgErreur));
         }
+    }
+
+    //TODO ! CREER VUES !
+    private function ajouterAnimateur()
+    {
+        //AJOUT D'UN ANIMATEUR
+        $_vue = new Vue('AjoutAnimateur');
+        $_vue->generer(array());
+        //todo
+    }
+    private function ajouterResponsable()
+    {
+        //AJOUT D'UN RESPONSABLE
+        $_vue = new Vue('AjoutResponsable');
+        $_vue->generer(array());
+        //todo
+    }
+    private function ajouterAdmin()
+    {
+        //AJOUT D'UN ADMIN
+        $_vue = new Vue('AjoutAdmin');
+        $_vue->generer(array());
+        //todo
     }
 
      /*
