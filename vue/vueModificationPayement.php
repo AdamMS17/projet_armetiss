@@ -9,7 +9,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="montantDuPayement">Nouveau montant total</label>
-            <input class="form-control" type="text" id="montantDuPayement" name="montantDuPayement" required />
+            <input class="form-control" type="number" id="montantDuPayement" name="montantDuPayement" required />
         </div>
                 
         <input class="btn btn-success" type="submit" name="enregistrementModifPayement">
