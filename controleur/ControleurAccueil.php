@@ -9,10 +9,29 @@ class ControleurAccueil
         if (isset($url) && count($url) > 1)
             throw new Exception('Page introuvable');
         else {
+            /*
+                Ici, on va vouloir savoir qui sont les utilisateurs,
+                pour rendre accessibles les fonctionnalités liées à leur(s) rôle(s).
+
+                Typiquement, l'administrateur pourra tout voir et tout faire.
+                C'est à dire, accéder aux accueils animateur, responsable et admin.
+
+                Le responsable accèdera à son acceuil et à celui de l'animateur.
+                
+                Le membre ne verra que la section profil.
+
+                Tout est contrôlé dans cette classe. Pas de controleur pour chaque fonctionnalité.
+            */
+
+            //todo Connexion Bird.
             //if (isset($_SESSION['utilisateur'])) {
 
-            //todo menu
+            //todo menu et/ou profil
 
+
+            //todo isAdmin Max.
+            //todo ...var session PERMISSION avec numero de rôle
+            //todo ...check < ou > et donner l'accès ou pas.
             //if ($_SESSION['utilisateur']->isAdmin()) {
             if (!empty($_GET['ajoutActivite'])) {
                 $this->ajoutActivite();
@@ -26,8 +45,18 @@ class ControleurAccueil
                 $this->suppActivite();
             } else if (!empty($_GET['suppEvenement'])) {
                 $this->suppEvenement();
-            } else $this->accueilAdmin();
+            } else if (!empty($_GET['ajoutMembre'])) {
+                $this->ajouterMembre();
+            }else if (!empty($_GET['enregistrementPaiement'])) {
+                $this->enregistrerPaiement();
+            }else {
+                $this->accueilAdmin();
+                //si responsable. //todo
+                $this->accueilResponsable();
+            }
             //}
+
+            //todo à activer quand la connexion fonctionnera pour la redirection
             //} else $this->login();
         }
     }
@@ -37,6 +66,8 @@ class ControleurAccueil
         header("Location:login");
     }
 
+//____________________________________________________________
+//ADMINISTRATEUR
     private function ajoutActivite()
     {
         //AJOUT D'UNE ACTIVITE
@@ -221,6 +252,10 @@ class ControleurAccueil
         }
     }
 
+     /*
+        Ce que voit l'administrateur.
+        On passe les activités et les évenements à la vue.
+    */
     private function accueilAdmin()
     {
         $am = new ActiviteManager;
@@ -230,5 +265,45 @@ class ControleurAccueil
 
         $_vue = new Vue('AccueilAdmin');
         $_vue->generer(array('activites' => $activites, 'evenements' => $evenements));
+    }
+//____________________________________________________________
+//RESPONSABLE
+
+    /*
+        Ce que voit le responsable.
+        On passe les membres à la vue.
+    */
+    private function accueilResponsable()
+    {
+        //todo managers
+        $_vue = new Vue('AccueilResponsable');
+        $_vue->generer(array());//todo
+        //membres : voir plus haut avec activites et evenements 
+    }
+
+    private function ajouterMembre()
+    {
+        //AJOUT D'UN MEMBRE
+        $_vue = new Vue('AjoutMembre');
+        $_vue->generer(array());
+        //todo
+    }
+
+    private function inscriptionActivite()
+    {
+        //todo
+    }
+
+    private function inscriptionEvenement()
+    {
+        //todo
+    }
+
+    private function enregistrerPaiement()
+    {
+        //ENREGISTREMENT D'UN PAIEMENT
+        $_vue = new Vue('AjoutPayement');
+        $_vue->generer(array());
+        //todo
     }
 }
