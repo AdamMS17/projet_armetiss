@@ -12,20 +12,33 @@ class PersonneManager extends DBManager
         try {
             $cnx=$this->getConnexion();
             $requete =  $cnx->prepare("INSERT INTO personne(login_Personne,nom_Personne,prenom_Personne,motDePasse_Personne,ville_Personne,rue_Personne,numero_Personne,numeroTel_Personne,dateNaiss_Personne,email_Personne) VALUES (:login,:nom,:prenom,:mdp,:ville,:rue,:numero,:numeroTel,:dateNaiss,:email)");
-            $requete->bindParam(':login', $personne->getLogin());
-            $requete->bindParam(':nom', $personne->getNom());
-            $requete->bindParam(':prenom', $personne->getPrenom());
-            $requete->bindParam(':mdp', $personne->getMDP());
-            $requete->bindParam(':ville', $personne->getVille());
-            $requete->bindParam(':rue', $personne->getRue());
-            $requete->bindParam(':numero', $personne->getNumero());
-            $requete->bindParam(':numeroTel', $personne->getNumeroTel());
-            $requete->bindParam(':dateNaiss', $personne->getDateNaiss());
-            $requete->bindParam(':email', $personne->getEmail());
+            
+            $login =$personne->getLogin();
+            $nom = $personne->getNom();
+            $prenom = $personne->getPrenom();
+            $mdp = $personne->getMDP();
+            $ville = $personne->getVille();
+            $rue = $personne->getRue();
+            $num = $personne->getNumero();
+            $numTel = $personne->getNumeroTel();
+            $dateNais = $personne->getDateNaiss();
+            $email = $personne->getEmail();
+
+            $requete->bindParam(':login',$login );
+            $requete->bindParam(':nom', $nom );
+            $requete->bindParam(':prenom', $prenom );
+            $requete->bindParam(':mdp', $mdp);
+            $requete->bindParam(':ville', $ville);
+            $requete->bindParam(':rue', $rue);
+            $requete->bindParam(':numero',$num );
+            $requete->bindParam(':numeroTel',$numTel );
+            $requete->bindParam(':dateNaiss',$dateNais );
+            $requete->bindParam(':email', $email);
             $requete->execute();
             $id = $cnx->lastInsertId();
             $personne->setIdentifiant_Personne($id);
         } catch (PDOException $e) {
+
             $msgErreur = $e->getMessage();
             $this->_vue = new Vue('Erreur');
             $this->_vue->generer(array('msgErreur' => $msgErreur));

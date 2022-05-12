@@ -21,7 +21,7 @@
     <div class="dropdown-divider border-warning"></div>
     <div class="row">
         <div class="table-responsive" id="responsableTable">
-            <h3 class="text-success text-center">Chargement des responsables</h3>
+            <h3 class="text-success text-center">Chargement des responsables...</h3>
         </div>
     </div>
 </section>
@@ -124,3 +124,8 @@
         </div>
     </div>
 </div>
+
+
+
+
+
