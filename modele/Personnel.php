@@ -1,7 +1,7 @@
 <?php
 class Personnel{
-    private $identifiantPersonne;
-    private $identifiantRole;
+    private $identifiant_Personne;
+    private $identifiant_role;
 
     public function __construct(array $data)
         {
@@ -17,20 +17,20 @@ class Personnel{
             }
         }
     //setter
-    public function setIdentifiant($identifiantPersonne)
+    public function setIdentifiant_Personne($identifiantPersonne)
     {
     $id = (int) $identifiantPersonne;
 
         if ($id > 0)
-        $this->identifiantPersonne = $id;
+        $this->identifiant_Personne = $id;
     }
 
-    public function setRole($identifiantRole)
+    public function setIdentifiant_role($identifiantRole)
     {
         $role = (int) $identifiantRole;
 
         if ($role > 0)
-        $this->identifiantRole = $role;
+        $this->identifiant_role = $role;
     }
 
 
@@ -41,7 +41,7 @@ class Personnel{
     }
     public function getRole()
     {
-       return $this->identifiant_Role;
+       return $this->identifiant_role;
     }
 }
 
