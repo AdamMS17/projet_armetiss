@@ -112,7 +112,7 @@
     }
     public function getVille()
     {
-        return $this->ville_Personnne;
+        return $this->ville_Personne;
     }
     public function getRue()
     {
