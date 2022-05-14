@@ -1,10 +1,9 @@
 <?php
 
-class Inscrit
+class Participe
 {
-    private ?int $identifiant_Activite = null;
+    private ?int $identifiant_Evenement = null;
     private ?int $identifiant_Personne = null;
-    private ?float $montant = null;
 
     public function __construct(array $data)
     {
@@ -21,12 +20,12 @@ class Inscrit
     }
 
     //SETTERS
-    public function setIdentifiant_Activite($identifiant_Activite)
+    public function setIdentifiant_Evenement($identifiant_Evenement)
     {
-        $identifiant_Activite = (int) $identifiant_Activite;
+        $identifiant_Evenement = (int) $identifiant_Evenement;
 
-        if ($identifiant_Activite > 0)
-            $this->identifiant_Activite = $identifiant_Activite;
+        if ($identifiant_Evenement > 0)
+            $this->identifiant_Evenement = $identifiant_Evenement;
     }
 
     public function setIdentifiant_Personne($identifiant_Personne)
@@ -37,25 +36,14 @@ class Inscrit
             $this->identifiant_Personne = $identifiant_Personne;
     }
 
-    public function setMontant($montant)
-    {
-        if (is_float($montant))
-            $this->montant = $montant;
-    }
-
     //GETTERS
-    public function getIdentifiant_Activite()
+    public function getIdentifiant_Evenement()
     {
-        return $this->identifiant_Activite;
+        return $this->identifiant_Evenement;
     }
 
     public function getIdentifiant_Personne()
     {
         return $this->identifiant_Personne;
-    }
-
-    public function getMontant()
-    {
-        return $this->montant;
     }
 }
