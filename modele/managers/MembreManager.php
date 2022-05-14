@@ -2,11 +2,6 @@
 require_once('DBManager.php');
 class MembreManager extends DBManager
 {
-
-    public function __construct()
-    {
-    }
-
     function insert(Membre $membre)
     {
         try {
@@ -14,10 +9,10 @@ class MembreManager extends DBManager
             $requete =  $cnx->prepare("INSERT INTO membre(id_Personne,numeroTel2_Membre,commentaire_Membre,actif_Membre,inscriptionPaye_Membre,montantCalculer_Membre) VALUES (:id,:tel,:com,:actif,:paye,:montant)");
             $requete->bindParam(':id', $membre->getId());
             $requete->bindParam(':tel', $membre->getNumTel2());
-            $requete->bindParam(':com', $membre->getCom());
+            $requete->bindParam(':com', $membre->getCommentaire());
             $requete->bindParam(':actif', $membre->getActif());
             $requete->bindParam(':paye', $membre->getInscriptionPaye());
-            $requete->bindParam(':montant', $membre->getMontant());
+            $requete->bindParam(':montant', $membre->getMontantCalculer());
             $requete->execute();
         } catch (PDOException $e) {
             $msgErreur = $e->getMessage();
@@ -34,10 +29,10 @@ class MembreManager extends DBManager
             $cnx=$this->getConnexion();
             $requete =  $cnx->prepare("UPDATE personne SET numeroTel2_Membre=:tel, commentaire_Membre=:com, actif_Membre=:actif, inscriptionPaye_Membre=:paye, montantCalculer_Membre=:montant WHERE id=:id ");
             $requete->bindParam(':tel', $membre->getNumTel2());
-            $requete->bindParam(':com', $membre->getCom());
+            $requete->bindParam(':com', $membre->getCommentaire());
             $requete->bindParam(':actif', $membre->getActif());
             $requete->bindParam(':paye', $membre->getInscriptionPaye());
-            $requete->bindParam(':montant', $membre->getMontant());
+            $requete->bindParam(':montant', $membre->getMontantCalculer());
             $requete->bindParam(':id', $membre->getId());
             $requete->execute();
         } catch (PDOException $e) {
@@ -66,7 +61,7 @@ class MembreManager extends DBManager
     }
     function getMembres()
     {
-        $cnx=$this->getConnexion();
+        $this->getConnexion();
         return $this->getAll('membre', 'Membre');
     }
     function getMembre(int $id)
@@ -95,4 +90,3 @@ class MembreManager extends DBManager
         }
     }
 }
-?>

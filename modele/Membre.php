@@ -1,92 +1,90 @@
 <?php
-
 class Membre
 {
-    private $identifiantPersonne;
-    private $numeroTel2Membre;
-    private $commentaireMembre;
-    private $actifMembre;
-    private $inscriptionPayeMembre;
-    private $montantCalculerMembre;
-   
+    private ?int $identifiant = null;
+    private ?String $numeroTel2 = null;
+    private ?String $commentaire = null;
+    private ?bool $actif = null;
+    private ?bool $inscriptionPaye = null;
+    private ?float $montantCalculer = null;
     public function __construct(array $data)
     {
         $this->hydrate($data);
     }
-
     public function hydrate(array $data)
     {
         foreach ($data as $key => $value) {
+
+            //Removes suffix from db field's name
+            if (str_ends_with($key, "_Membre"))
+                $key = substr($key, 0, -7);
+            else if (str_ends_with($key, "_Personne"))
+                $key = substr($key, 0, -9);
+
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method))
                 $this->$method($value);
         }
     }
-    //setter
-    public function setIdentifiant($identifiantPersonne)
+    public function setIdentifiant($identifiant)
     {
-    $id = (int) $identifiantPersonne;
+        $id = (int) $identifiant;
 
         if ($id > 0)
-        $this->identifiantPersonne = $id;
+            $this->identifiant = $id;
     }
-
-    public function setNumTel2($numeroTel2Membre)
+    public function setNumTel2($numeroTel2)
     {
-        if (is_string($numeroTel2Membre))
-            $this->numeroTel2Membre = $numeroTel2Membre;
+        if (is_string($numeroTel2))
+            $this->numeroTel2 = $numeroTel2;
     }
-    public function setCom($commentaireMembre)
+    public function setCommentaire($commentaire)
     {
-        if (is_string($commentaireMembre))
-            $this->commentaireMembre = $commentaireMembre;
+        if (is_string($commentaire))
+            $this->commentaire = $commentaire;
     }
-
-    public function setActif($actifMembre)
+    public function setActif($actif)
     {
-        if ($actifMembre==0){
-            $this->actifMembre = 1;
-        }else{
-            $this->actifMembre = 0; 
+        if ($actif == 0) {
+            $this->actif = 1;
+        } else {
+            $this->actif = 0;
         }
     }
-
-    public function setInscriptionPaye($inscriptionPayeMembre)
+    public function setInscriptionPaye($inscriptionPaye)
     {
-        if ($inscriptionPayeMembre==0){
-            $this->inscriptionPayeMembre = 1;
-        }else{
-            $this->inscriptionPayeMembre = 0; 
+        if ($inscriptionPaye == 0) {
+            $this->inscriptionPaye = 1;
+        } else {
+            $this->inscriptionPaye = 0;
         }
     }
-    public function setMontant($montantCalculerMembre)
+    public function setMontantCalculer($montantCalculer)
     {
-            $this->montantCalculerMembre += $montantCalculerMembre;
+        $this->montantCalculer += $montantCalculer;
     }
-    //getter
     public function getId()
     {
-      return $this->identifiant_Personne;
+        return $this->identifiant;
     }
     public function getNumTel2()
     {
-      return $this->numeroTel2_Membre;
+        return $this->numeroTel2;
     }
-    public function getCom()
+    public function getCommentaire()
     {
-        return $this->commentaire_Membre;
-    } 
+        return $this->commentaire;
+    }
     public function getActif()
     {
-        return $this->actif_Membre;
+        return $this->actif;
     }
     public function getInscriptionPaye()
     {
-        return $this->inscriptionPaye_Membre;
+        return $this->inscriptionPaye;
     }
-    public function getMontant()
+    public function getMontantCalculer()
     {
-        return $this->montantCalculer_Membre;
+        return $this->montantCalculer;
     }
 }
-?>

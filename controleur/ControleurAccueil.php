@@ -46,7 +46,7 @@ class ControleurAccueil
             } else if (!empty($_GET['suppEvenement'])) {
                 $this->suppEvenement();
             }
-            
+
             /*else if (!empty($_GET['ajoutAnimateur'])) {
                 $this->ajouterAnimateur();
             }else if (!empty($_GET['ajoutResponsable'])) {
@@ -58,9 +58,11 @@ class ControleurAccueil
             //todo Separation RESPONSABLE
             else if (!empty($_GET['ajoutMembre'])) {
                 $this->ajouterMembre();
-            }else if (!empty($_GET['enregistrementPaiement'])) {
+            } else if (!empty($_GET['enregistrementPaiement'])) {
                 $this->enregistrerPaiement();
-            }else {
+            } else if (!empty($_GET['inscriptionMembreActivite'])) {
+                $this->inscriptionMembreActivite();
+            } else {
                 $this->accueilAdmin();
                 //si responsable. //todo
                 $this->accueilResponsable();
@@ -77,8 +79,8 @@ class ControleurAccueil
         header("Location:login");
     }
 
-//____________________________________________________________
-//ADMINISTRATEUR
+    //____________________________________________________________
+    //ADMINISTRATEUR
     private function ajoutActivite()
     {
         //AJOUT D'UNE ACTIVITE
@@ -286,7 +288,7 @@ class ControleurAccueil
         //todo
     }
 
-     /*
+    /*
         Ce que voit l'administrateur.
         On passe les activités et les évenements à la vue.
     */
@@ -300,8 +302,8 @@ class ControleurAccueil
         $_vue = new Vue('AccueilAdmin');
         $_vue->generer(array('activites' => $activites, 'evenements' => $evenements));
     }
-//____________________________________________________________
-//RESPONSABLE
+    //____________________________________________________________
+    //RESPONSABLE
 
     /*
         Ce que voit le responsable.
@@ -311,7 +313,7 @@ class ControleurAccueil
     {
         //todo managers
         $_vue = new Vue('AccueilResponsable');
-        $_vue->generer(array());//todo
+        $_vue->generer(array()); //todo
         //membres : voir plus haut avec activites et evenements 
     }
 
@@ -323,14 +325,25 @@ class ControleurAccueil
         //todo
     }
 
-    private function inscriptionActivite()
+    private function inscriptionMembreActivite()
     {
-        //todo
-    }
+        //INSCRIPTION D'UN MEMBRE A UNE ACTIVITE OU UN EVENEMENT
+        $mm = new MembreManager;
+        $am = new ActiviteManager;
+        $em = new EvenementManager;
 
-    private function inscriptionEvenement()
-    {
-        //todo
+        $membres = $mm->getMembres();
+        $activites = $am->getActivites();
+        $evenements = $em->getEvenements();
+        
+
+        //On pass à la vue: membres, activites, evenements.
+
+        $_vue = new Vue('InscriptionMembreActivite');
+        $_vue->generer(array(
+            'membres' => $membres, 'activites' => $activites,
+            'evenements' => $evenements
+        ));
     }
 
     private function enregistrerPaiement()
@@ -339,5 +352,9 @@ class ControleurAccueil
         $_vue = new Vue('AjoutPayement');
         $_vue->generer(array());
         //todo
+    }
+
+    private function consulterAgenda()
+    {
     }
 }
