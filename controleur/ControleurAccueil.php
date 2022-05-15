@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 class ControleurAccueil
 {
     private $_vue;
@@ -60,7 +63,7 @@ class ControleurAccueil
                 $this->inscriptionMembreActivite();
             } else if (!empty($_GET['inscriptionMembreEvenement'])) {
                 $this->inscriptionMembreEvenement();
-            }else {
+            } else {
                 $this->accueilAdmin();
                 //si responsable. //todo
                 $this->accueilResponsable();
@@ -311,7 +314,7 @@ class ControleurAccueil
 
     private function inscriptionMembreActivite()
     {
-        //INSCRIPTION D'UN MEMBRE A UNE ACTIVITE OU UN EVENEMENT
+        //INSCRIPTION D'UN MEMBRE A UNE ACTIVITE
         $mm = new MembreManager;
         $am = new ActiviteManager;
 
@@ -319,12 +322,38 @@ class ControleurAccueil
         $activites = $am->getActivites();
 
         //On passe à la vue: membres, activites.
-
+        
         $_vue = new Vue('InscriptionMembreActivite');
         $_vue->generer(array(
             'membres' => $membres,
             'activites' => $activites
         ));
+        
+        if (!empty($_POST["inscriptionActivite"])) {
+            try {
+
+                $idA = substr(
+                    $_POST['activite'],
+                    0,
+                    strpos($_POST['activite'], ":")
+                );
+
+                $im = new InscritManager;
+                $data = array(
+                    'identifiant_Activite' => $idA,
+                    'identifiant_Personne' =>$_POST['personne'],
+                    'montant' => (float) $_POST['montant']
+                );
+                $i = new Inscrit($data);
+                $im->insert($i);
+
+                header("location:" . URL);
+            } catch (Exception $e) {
+                $msgErreur = $e->getMessage();
+                $_vue = new Vue('Erreur');
+                $_vue->generer(array('msgErreur' => $msgErreur));
+            }
+        }
     }
 
     private function inscriptionMembreEvenement()

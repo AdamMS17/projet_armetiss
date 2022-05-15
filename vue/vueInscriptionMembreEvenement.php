@@ -23,7 +23,6 @@
         } ?>
     </select>
 
-    <input type="number" step="0.01">
     <input class="btn btn-success" type="submit" name="inscriptionEvenement">
     
 </div>
