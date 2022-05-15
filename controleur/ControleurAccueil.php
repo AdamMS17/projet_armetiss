@@ -47,12 +47,8 @@ class ControleurAccueil
                 $this->suppEvenement();
             }
 
-            /*else if (!empty($_GET['ajoutAnimateur'])) {
-                $this->ajouterAnimateur();
-            }else if (!empty($_GET['ajoutResponsable'])) {
-                $this->ajouterResponsable();
-            }else if (!empty($_GET['ajoutAdmin'])) {
-                $this->ajouterAdmin();
+            /*else if (!empty($_GET['ajoutPersonnel'])) {
+                $this->ajouterPersonnel();
             }*/
 
             //todo Separation RESPONSABLE
@@ -62,7 +58,9 @@ class ControleurAccueil
                 $this->enregistrerPaiement();
             } else if (!empty($_GET['inscriptionMembreActivite'])) {
                 $this->inscriptionMembreActivite();
-            } else {
+            } else if (!empty($_GET['inscriptionMembreEvenement'])) {
+                $this->inscriptionMembreEvenement();
+            }else {
                 $this->accueilAdmin();
                 //si responsable. //todo
                 $this->accueilResponsable();
@@ -266,24 +264,10 @@ class ControleurAccueil
     }
 
     //TODO ! CREER VUES !
-    private function ajouterAnimateur()
+    private function ajouterPersonnel()
     {
-        //AJOUT D'UN ANIMATEUR
-        $_vue = new Vue('AjoutAnimateur');
-        $_vue->generer(array());
-        //todo
-    }
-    private function ajouterResponsable()
-    {
-        //AJOUT D'UN RESPONSABLE
-        $_vue = new Vue('AjoutResponsable');
-        $_vue->generer(array());
-        //todo
-    }
-    private function ajouterAdmin()
-    {
-        //AJOUT D'UN ADMIN
-        $_vue = new Vue('AjoutAdmin');
+        //AJOUT D'UN MEMBRE DU PERSONNEL
+        $_vue = new Vue('AjoutPersonnel');
         $_vue->generer(array());
         //todo
     }
@@ -330,18 +314,33 @@ class ControleurAccueil
         //INSCRIPTION D'UN MEMBRE A UNE ACTIVITE OU UN EVENEMENT
         $mm = new MembreManager;
         $am = new ActiviteManager;
-        $em = new EvenementManager;
 
         $membres = $mm->getMembres();
         $activites = $am->getActivites();
-        $evenements = $em->getEvenements();
-        
 
-        //On pass à la vue: membres, activites, evenements.
+        //On passe à la vue: membres, activites.
 
         $_vue = new Vue('InscriptionMembreActivite');
         $_vue->generer(array(
-            'membres' => $membres, 'activites' => $activites,
+            'membres' => $membres,
+            'activites' => $activites
+        ));
+    }
+
+    private function inscriptionMembreEvenement()
+    {
+        //INSCRIPTION D'UN MEMBRE A UN EVENEMENT
+        $mm = new MembreManager;
+        $em = new EvenementManager;
+
+        $membres = $mm->getMembres();
+        $evenements = $em->getEvenements();
+
+        //On passe à la vue: membres, evenements.
+
+        $_vue = new Vue('InscriptionMembreEvenement');
+        $_vue->generer(array(
+            'membres' => $membres,
             'evenements' => $evenements
         ));
     }

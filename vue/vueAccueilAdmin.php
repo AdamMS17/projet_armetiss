@@ -85,19 +85,7 @@
 </div>
 
 <div class="m-5">
-    <a href="?ajoutAdmin=ajoutAdmin">
-        Nouvel administrateur
-    </a>
-</div>
-
-<div class="m-5">
-    <a href="?ajoutResponsable=ajoutResponsable">
-        Nouveau responsable
-    </a>
-</div>
-
-<div class="m-5">
-    <a href="?ajoutAnimateur=ajoutAnimateur">
-        Nouvel animateur
+    <a href="?ajoutPersonnel=ajoutPersonnel">
+        Nouveau personnel
     </a>
 </div>
