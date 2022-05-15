@@ -59,7 +59,9 @@ class ControleurAccueil
                 $this->ajouterMembre();
             } else if (!empty($_GET['enregistrementPaiement'])) {
                 $this->enregistrerPaiement();
-            } else if (!empty($_GET['inscriptionMembreActivite'])) {
+            } else if (!empty($_GET['modificationPaiement'])) {
+                $this->modifierPaiement();
+            }else if (!empty($_GET['inscriptionMembreActivite'])) {
                 $this->inscriptionMembreActivite();
             } else if (!empty($_GET['inscriptionMembreEvenement'])) {
                 $this->inscriptionMembreEvenement();
@@ -381,7 +383,12 @@ class ControleurAccueil
         $_vue->generer(array());
         //todo
     }
-
+    private function modifierPaiement()
+    {
+        //MODIFICATION D'UN PAIEMENT
+        $_vue = new Vue('ModificationPayement');
+        $_vue->generer(array());
+    }
     private function consulterAgenda()
     {
     }

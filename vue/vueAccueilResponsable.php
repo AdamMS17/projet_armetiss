@@ -27,3 +27,9 @@
         Enregistrer un paiement
     </a>
 </div>
+
+<div class="m-5">
+    <a href="?modificationPaiement=modificationPaiement">
+        Modifier un paiement 
+    </a>
+</div>
