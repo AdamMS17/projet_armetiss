@@ -374,6 +374,31 @@ class ControleurAccueil
             'membres' => $membres,
             'evenements' => $evenements
         ));
+
+        if (!empty($_POST["inscriptionEvenement"])) {
+            try {
+
+                $idE = substr(
+                    $_POST['evenement'],
+                    0,
+                    strpos($_POST['evenement'], ":")
+                );
+
+                $pm = new ParticipeManager;
+                $data = array(
+                    'identifiant_Evenement' => $idE,
+                    'identifiant_Personne' =>$_POST['personne']
+                );
+                $p = new Participe($data);
+                $pm->insert($p);
+
+                header("location:" . URL);
+            } catch (Exception $e) {
+                $msgErreur = $e->getMessage();
+                $_vue = new Vue('Erreur');
+                $_vue->generer(array('msgErreur' => $msgErreur));
+            }
+        }
     }
 
     private function enregistrerPaiement()
