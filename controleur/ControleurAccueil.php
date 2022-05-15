@@ -27,7 +27,7 @@ class ControleurAccueil
             */
 
             //todo Connexion Bird.
-            //if (isset($_SESSION['utilisateur'])) {
+            if (isset($_SESSION['utilisateur'])) {
 
             //todo menu et/ou profil
 
@@ -73,7 +73,7 @@ class ControleurAccueil
             //}
 
             //todo à activer quand la connexion fonctionnera pour la redirection
-            //} else $this->login();
+            } else $this->login();
         }
     }
 

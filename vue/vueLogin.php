@@ -1,30 +1,5 @@
-<!-- ancien login -->
-<!-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-6">
-            <img class="img-fluid mx-auto d-block" src="images/Logo_Armetiss.png" id="icon" alt="Armetiss"
-                width="50%" />
-        </div>
-    </div>
-</div>
 
-<form>
-    <div class="row">
-        <div class="col">
-            <input type="text" id="identifiant" name="identifiant" placeholder="Identifiant">
-        </div>
-        <div class="row">
-            <div class="col">
-                <input type="password" id="mdp" name="mdp" placeholder="Mot de passe">
-            </div>
-        </div>
 
-    </div>
-
-    
-    <input class="btn btn-primary" type="submit" value="Se connecter">
-</form>
-<a href="#">Mot de passe oublié?</a> -->
 
 
 <div class="container">
@@ -39,19 +14,23 @@
           <div class="text-center">
             <img src="images/Logo_Armetiss.png" class="rounded mb-5" alt="..." width="200px">
           </div>
-          <form class="form-box px-3">
+          <form class="form-box px-3" method="POST" action="">
             <div class="form-input">
               <span class="pt-1"><i class="fa-solid fa-at"></i></span>
-              <input type="email" name="" placeholder="E-mail"  required>
+              <input type="text" name="login" placeholder="Identifiant"  required>
             </div>
             <div class="form-input">
               <span class="pt-1"><i class="fa-solid fa-lock"></i></span>
-              <input type="password" name="" placeholder="Mot de passe" required>
+              
+              <input id="password" type="password" name="password" placeholder="Mot de passe" required>
+              <span class="pt-1"><i id="eye" class="fa fa-eye"></i></span>
+              
+              
             </div>
 
 
             <div class="mb-3 d-grid gap-2" >
-              <button type="submit" class="btn text-uppercase">
+              <button type="submit" name="loginSubmit" value="loginSubmit" class="btn text-uppercase">
                 Se connecter
               </button>
             </div>

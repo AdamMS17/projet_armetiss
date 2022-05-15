@@ -15,14 +15,23 @@ class ControleurLogin
 
     private function login()
     {
+        
+
+        //si session ouvert alors pas de page de login 
+        if (isset($_SESSION['utilisateur'])) {
+            header("Location:accueil");
+        }
+
+        
         $this->_vue = new Vue('Login');
         $this->_vue->generer(array());
+        
         if (!empty($_POST["logout"]))
             session_unset();
         else
-        if (!empty($_POST["login"])) {
+        if (!empty($_POST["loginSubmit"])) {
             $this->_personneManager = new PersonneManager;
-            if ($utilisateur = $this->_personneManager->login($_POST['pseudo'], $_POST['password']))
+            if ($utilisateur = $this->_personneManager->login($_POST['login'], $_POST['password']))
                 $this->demarrage($utilisateur);
         }
     }

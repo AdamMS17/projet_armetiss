@@ -32,6 +32,7 @@ if (title == "ResponsableCRUD") {
     jsFile.setAttribute("src", "scripts/scriptResponsableCRUD.js");
 }
 if (title == "Login") {
+    jsFile.setAttribute("src", "scripts/scriptLogin.js");
     
 }
 
