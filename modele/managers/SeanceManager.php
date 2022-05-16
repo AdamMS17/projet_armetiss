@@ -10,18 +10,31 @@ class SeanceManager extends DBManager
         return $this->getAll('seance', 'Seance');
     }
 
-    public function getSeancesAnimateur($id)
+    public function getSeancesByIdActivite($id)
     {
-        $this->getConnexion();
-        return $this->getByIdName('seance', 'Seance', $id, 'identifiant_Personne');
+        $var = [];
+        $requete = $this->getConnexion()->prepare(
+            'SELECT * FROM seance WHERE identifiant_Activite=' . $id
+        );
+        $requete->execute();
+        while ($data = $requete->fetch(PDO::FETCH_ASSOC))
+            $var[] = new Seance($data);
+
+        return $var;
     }
 
-    public function getSeancesActivite($id)
+    public function getSeancesByIdAnimateur($id)
     {
-        $this->getConnexion();
-        return $this->getByIdName('seance', 'Seance', $id, 'identifiant_Activite');
-    }
+        $var = [];
+        $requete = $this->getConnexion()->prepare(
+            'SELECT * FROM seance WHERE identifiant_Personne=' . $id
+        );
+        $requete->execute();
+        while ($data = $requete->fetch(PDO::FETCH_ASSOC))
+            $var[] = new Seance($data);
 
+        return $var;
+    }
 
     public function insert(Seance $seance)
     {
@@ -29,8 +42,8 @@ class SeanceManager extends DBManager
                 VALUES (:identifiant_Activite,:date_Seance)";
         try {
             $requete = $this->getConnexion()->prepare($sql);
-            $idActivite=$seance->getIdentifiant_Activite();
-            $date=$seance->getDate_Seance();
+            $idActivite = $seance->getIdentifiant_Activite();
+            $date = $seance->getDate_Seance();
             $requete->bindParam(':identifiant_Activite', $idActivite);
             $requete->bindParam(':date_Seance', $date);
             $requete->execute();

@@ -11,6 +11,19 @@ class InscritManager extends DBManager
         return $this->getAll('inscrit', 'Inscrit');
     }
 
+    public function getInscritsByIdPersonne($id)
+    {
+        $var = [];
+        $requete = $this->getConnexion()->prepare(
+            'SELECT * FROM inscrit WHERE identifiant_Personne=' . $id
+        );
+        $requete->execute();
+        while ($data = $requete->fetch(PDO::FETCH_ASSOC))
+            $var[] = new Inscrit($data);
+
+        return $var;
+    }
+
     public function insert(Inscrit $inscrit)
     {
         $sql = "INSERT INTO inscrit(identifiant_Activite, identifiant_Personne, montant)

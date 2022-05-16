@@ -28,51 +28,51 @@ class ControleurAccueil
 
             //todo Connexion Bird.
             if (isset($_SESSION['utilisateur'])) {
+                //todo menu et/ou profil
 
-            //todo menu et/ou profil
+                //todo isAdmin Max.
+                //todo ...var session PERMISSION avec numero de rôle
+                //todo ...check < ou > et donner l'accès ou pas.
+                //if ($_SESSION['utilisateur']->isAdmin()) {
+                if (!empty($_GET['ajoutActivite'])) {
+                    $this->ajoutActivite();
+                } else if (!empty($_GET['ajoutEvenement'])) {
+                    $this->ajoutEvenement();
+                } else if (!empty($_GET['modActivite'])) {
+                    $this->modifActivite();
+                } else if (!empty($_GET['modEvenement'])) {
+                    $this->modifEvenement();
+                } else if (!empty($_GET['suppActivite'])) {
+                    $this->suppActivite();
+                } else if (!empty($_GET['suppEvenement'])) {
+                    $this->suppEvenement();
+                } else if (!empty($_GET['agenda'])) {
+                    $this->consulterAgenda();
+                }
 
-
-            //todo isAdmin Max.
-            //todo ...var session PERMISSION avec numero de rôle
-            //todo ...check < ou > et donner l'accès ou pas.
-            //if ($_SESSION['utilisateur']->isAdmin()) {
-            if (!empty($_GET['ajoutActivite'])) {
-                $this->ajoutActivite();
-            } else if (!empty($_GET['ajoutEvenement'])) {
-                $this->ajoutEvenement();
-            } else if (!empty($_GET['modActivite'])) {
-                $this->modifActivite();
-            } else if (!empty($_GET['modEvenement'])) {
-                $this->modifEvenement();
-            } else if (!empty($_GET['suppActivite'])) {
-                $this->suppActivite();
-            } else if (!empty($_GET['suppEvenement'])) {
-                $this->suppEvenement();
-            }
-
-            /*else if (!empty($_GET['ajoutPersonnel'])) {
+                /*else if (!empty($_GET['ajoutPersonnel'])) {
                 $this->ajouterPersonnel();
             }*/
 
-            //todo Separation RESPONSABLE
-            else if (!empty($_GET['ajoutMembre'])) {
-                $this->ajouterMembre();
-            } else if (!empty($_GET['enregistrementPaiement'])) {
-                $this->enregistrerPaiement();
-            } else if (!empty($_GET['modificationPaiement'])) {
-                $this->modifierPaiement();
-            }else if (!empty($_GET['inscriptionMembreActivite'])) {
-                $this->inscriptionMembreActivite();
-            } else if (!empty($_GET['inscriptionMembreEvenement'])) {
-                $this->inscriptionMembreEvenement();
-            } else {
-                $this->accueilAdmin();
-                //si responsable. //todo
-                $this->accueilResponsable();
-            }
-            //}
+                //todo Separation RESPONSABLE
+                else if (!empty($_GET['ajoutMembre'])) {
+                    $this->ajouterMembre();
+                } else if (!empty($_GET['enregistrementPaiement'])) {
+                    $this->enregistrerPaiement();
+                } else if (!empty($_GET['modificationPaiement'])) {
+                    $this->modifierPaiement();
+                } else if (!empty($_GET['inscriptionMembreActivite'])) {
+                    $this->inscriptionMembreActivite();
+                } else if (!empty($_GET['inscriptionMembreEvenement'])) {
+                    $this->inscriptionMembreEvenement();
+                } else {
+                    $this->accueilAdmin();
+                    //si responsable. //todo
+                    $this->accueilResponsable();
+                }
+                //}
 
-            //todo à activer quand la connexion fonctionnera pour la redirection
+                //todo à activer quand la connexion fonctionnera pour la redirection
             } else $this->login();
         }
     }
@@ -324,13 +324,13 @@ class ControleurAccueil
         $activites = $am->getActivites();
 
         //On passe à la vue: membres, activites.
-        
+
         $_vue = new Vue('InscriptionMembreActivite');
         $_vue->generer(array(
             'membres' => $membres,
             'activites' => $activites
         ));
-        
+
         if (!empty($_POST["inscriptionActivite"])) {
             try {
 
@@ -343,7 +343,7 @@ class ControleurAccueil
                 $im = new InscritManager;
                 $data = array(
                     'identifiant_Activite' => $idA,
-                    'identifiant_Personne' =>$_POST['personne'],
+                    'identifiant_Personne' => $_POST['personne'],
                     'montant' => (float) $_POST['montant']
                 );
                 $i = new Inscrit($data);
@@ -387,7 +387,7 @@ class ControleurAccueil
                 $pm = new ParticipeManager;
                 $data = array(
                     'identifiant_Evenement' => $idE,
-                    'identifiant_Personne' =>$_POST['personne']
+                    'identifiant_Personne' => $_POST['personne']
                 );
                 $p = new Participe($data);
                 $pm->insert($p);
@@ -408,13 +408,52 @@ class ControleurAccueil
         $_vue->generer(array());
         //todo
     }
+
     private function modifierPaiement()
     {
         //MODIFICATION D'UN PAIEMENT
         $_vue = new Vue('ModificationPayement');
         $_vue->generer(array());
     }
+
     private function consulterAgenda()
     {
+        $personne = new Personne($_SESSION['utilisateur']);
+        $idP = $personne->getId();
+
+        $im = new InscritManager;
+        $sm = new SeanceManager;
+
+        $inscrits = $im->getInscritsByIdPersonne($idP);
+        $seances = [];
+        $activites = [];
+
+        foreach ($inscrits as $inscrit) {
+            $seances[] = $sm->getSeancesByIdActivite($inscrit->getIdentifiant_Activite());
+        }
+
+        if(!empty($inscrits)){
+            $am = new ActiviteManager;
+            foreach ($inscrits as $inscrit) {
+                $activites[] = $am->getActivite($inscrit->getIdentifiant_Activite());
+            }
+        }
+
+        $pm = new ParticipeManager;
+        $em = new EvenementManager;
+
+        $participes = $pm->getParticipesByIdPersonne($idP);
+        $evenements = [];
+
+        foreach ($participes as $participe) {
+            $evenements[] = $em->getEvenement($participe->getIdentifiant_Evenement());
+        }
+
+        $_vue = new Vue('Agenda');
+        $_vue->generer(array(
+            'activites' => $activites,
+            'seances' => $seances,
+            'evenements' => $evenements
+        ));
     }
 }

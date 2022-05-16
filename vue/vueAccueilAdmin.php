@@ -46,7 +46,7 @@
     </table>
 </div>
 
-<!-- TABLEAU DES ACTIVITES -->
+<!-- TABLEAU DES EVENEMENTS -->
 <div class="m-5">
     <table class="table table-striped">
         <thead>
@@ -87,5 +87,11 @@
 <div class="m-5">
     <a href="?ajoutPersonnel=ajoutPersonnel">
         Nouveau personnel
+    </a>
+</div>
+
+<div class="m-5">
+    <a href="?agenda=agenda">
+        Consulter agenda
     </a>
 </div>
