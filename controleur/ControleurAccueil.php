@@ -378,20 +378,33 @@ class ControleurAccueil
         //INSCRIPTION D'UN MEMBRE A UN EVENEMENT
         $mm = new MembreManager;
         $em = new EvenementManager;
+        $pm = new PersonneManager;
+
+        $personnes = [];
+        $evenements = [];
 
         $membres = $mm->getMembres();
         $evenements = $em->getEvenements();
 
-        //On passe à la vue: membres, evenements.
+        foreach ($membres as $membre) {
+            $personnes[] = $pm->getPersonne($membre->getId());
+        }
 
+        //On passe à la vue: personnes, evenements.
         $_vue = new Vue('InscriptionMembreEvenement');
         $_vue->generer(array(
-            'membres' => $membres,
+            'personnes' => $personnes,
             'evenements' => $evenements
         ));
 
         if (!empty($_POST["inscriptionEvenement"])) {
             try {
+
+                $idP = substr(
+                    $_POST['personne'],
+                    0,
+                    strpos($_POST['personne'], ":")
+                );
 
                 $idE = substr(
                     $_POST['evenement'],
@@ -402,7 +415,7 @@ class ControleurAccueil
                 $pm = new ParticipeManager;
                 $data = array(
                     'identifiant_Evenement' => $idE,
-                    'identifiant_Personne' => $_POST['personne']
+                    'identifiant_Personne' => $idP
                 );
                 $p = new Participe($data);
                 $pm->insert($p);

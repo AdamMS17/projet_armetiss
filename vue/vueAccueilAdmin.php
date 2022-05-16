@@ -63,7 +63,7 @@
             ?>
                     <tr>
                         <td><?= $evenement->getNom(); ?></td>
-                        <td><?= $evenement->getDate(); ?></td>
+                        <td><?= date("d-m-y", strtotime($evenement->getDate())); ?></td>
                         <td><?= $evenement->getHeureDebut(); ?></td>
                         <td><?= $evenement->getHeureFin(); ?></td>
                         <td><?= $evenement->getCout(); ?>€</td>
