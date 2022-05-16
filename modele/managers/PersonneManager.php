@@ -89,7 +89,7 @@ class PersonneManager extends DBManager
     }
     function getPersonnes()
     {
-        $cnx=$this->getConnexion();
+        $this->getConnexion();
         return $this->getAll('personne', 'Personne');
     }
     function getPersonne(int $id)

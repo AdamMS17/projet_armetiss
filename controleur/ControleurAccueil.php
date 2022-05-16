@@ -268,7 +268,7 @@ class ControleurAccueil
         }
     }
 
-    //TODO ! CREER VUES !
+    //TODO ! CREER VUE !
     private function ajouterPersonnel()
     {
         //AJOUT D'UN MEMBRE DU PERSONNEL
@@ -319,20 +319,34 @@ class ControleurAccueil
         //INSCRIPTION D'UN MEMBRE A UNE ACTIVITE
         $mm = new MembreManager;
         $am = new ActiviteManager;
+        $pm = new PersonneManager;
+
+        $personnes = [];
+        $activites = [];
 
         $membres = $mm->getMembres();
         $activites = $am->getActivites();
 
-        //On passe à la vue: membres, activites.
+        foreach ($membres as $membre) {
+            $personnes[] = $pm->getPersonne($membre->getId());
+        }
 
+
+        //On passe à la vue: personnes, activites.
         $_vue = new Vue('InscriptionMembreActivite');
         $_vue->generer(array(
-            'membres' => $membres,
+            'personnes' => $personnes,
             'activites' => $activites
         ));
 
         if (!empty($_POST["inscriptionActivite"])) {
             try {
+
+                $idP = substr(
+                    $_POST['personne'],
+                    0,
+                    strpos($_POST['personne'], ":")
+                );
 
                 $idA = substr(
                     $_POST['activite'],
@@ -343,9 +357,10 @@ class ControleurAccueil
                 $im = new InscritManager;
                 $data = array(
                     'identifiant_Activite' => $idA,
-                    'identifiant_Personne' => $_POST['personne'],
+                    'identifiant_Personne' => $idP,
                     'montant' => (float) $_POST['montant']
                 );
+
                 $i = new Inscrit($data);
                 $im->insert($i);
 
@@ -404,23 +419,22 @@ class ControleurAccueil
     private function enregistrerPaiement()
     {
         //ENREGISTREMENT D'UN PAIEMENT
-        $ep= new PayementManager;
+        $ep = new PayementManager;
 
         $_vue = new Vue('AjoutPayement');
         $_vue->generer(array());
 
-        if(!empty($_POST["AjoutPayement"])){
+        if (!empty($_POST["AjoutPayement"])) {
             try {
-                $data= array(
+                $data = array(
                     'eleve' => $_POST['eleve'], 'montantDuPayement' => $_POST['montantDuPayement']
                 );
             } catch (Exception $e) {
-                $msgErreur =$e->getMessage();
+                $msgErreur = $e->getMessage();
                 $_vue = new Vue('Erreur');
-                $_vue->generer(array('msgErreur' =>$msgErreur));
+                $_vue->generer(array('msgErreur' => $msgErreur));
             }
         }
-        
     }
 
     private function modifierPaiement()
@@ -446,7 +460,7 @@ class ControleurAccueil
             $seances[] = $sm->getSeancesByIdActivite($inscrit->getIdentifiant_Activite());
         }
 
-        if(!empty($inscrits)){
+        if (!empty($inscrits)) {
             $am = new ActiviteManager;
             foreach ($inscrits as $inscrit) {
                 $activites[] = $am->getActivite($inscrit->getIdentifiant_Activite());

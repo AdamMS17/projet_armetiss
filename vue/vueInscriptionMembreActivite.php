@@ -6,9 +6,11 @@
         <select required class="form-select" aria-label="Sélection du membre." name="personne">
             <option selected value="">Sélection du membre.</option>
             <?php
-            if (!empty($membres)) {
-                foreach ($membres as $membre) :
-                    echo "<option>" . $membre->getId() . "</option>";
+
+            if (!empty($personnes)) {
+                foreach ($personnes as $personne) :
+                    echo "<option>" . $personne->getId() . ": "
+                        . $personne->getNom() .  " " . $personne->getPrenom() . "</option>";
                 endforeach;
             } ?>
         </select>
