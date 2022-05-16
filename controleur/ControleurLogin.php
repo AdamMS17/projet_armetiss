@@ -19,7 +19,10 @@ class ControleurLogin
 
         //si session ouvert alors pas de page de login 
         if (isset($_SESSION['utilisateur'])) {
-            header("Location:accueil");
+            //todo Décommenter quand la déconnexion existera.
+            //Pour l'instant. On change de compte en allant sur cette page par l'url.
+            //
+            //header("Location:accueil");
         }
 
         
@@ -44,7 +47,8 @@ class ControleurLogin
                     session_unset();
 
             $_SESSION['utilisateur'] = $utilisateur;
-            header("Location:accueil");
+            //Redirection vers la page d'accueil.
+            header("location:" . URL);
         } catch (Exception $e) {
             $msgErreur = $e->getMessage();
             $this->_vue = new Vue('Erreur');
