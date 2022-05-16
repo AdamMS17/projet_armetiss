@@ -3,10 +3,10 @@ require_once('DBManager.php');
 
 class PayementManager extends DBManager
 {
-    public function insererPayement()
+    public function insererPayement(Activite $activite, Membre $membre)
     {
         $sql= "INSERT INTO `paiement` (`identifiant_Personne`, `date_Paiement`, `montant_Paiement`, `identifiant_Activite`, `identifiant_Evenement`) 
-        VALUES ('1', '2022-04-15', '70', '1', NULL);"; //a modifier requete avec les bons param
+        VALUES ('identifiant_membre', '2022-04-15', '70', 'identifiant_activite', NULL);"; //a modifier requete avec les bons param
         $sqlVerif="SELECT identifiant_Personne, identifiant_Activite FROM paiement WHERE identifiant_Personne=1 AND identifiant_Activite=1 ";   
             try {
             $con = $this->getConnexion();
@@ -14,6 +14,8 @@ class PayementManager extends DBManager
             $requeteVerif = $con->prepare($sqlVerif);   //sert a la requete pour verifier qu'un paiement a été ajouté pour un utilisateur dans une activité
             $requeteVerif->execute();
             $verification=$requeteVerif->fetch();
+            $requete->bindParam('identifiant_membre',$membre->getId());
+            $requete->bindParam('identifiant_activite',$activite->getId());
         } 
             catch (PDOException $e) {
             $msgErreur = $e->getMessage();
