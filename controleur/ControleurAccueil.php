@@ -404,9 +404,23 @@ class ControleurAccueil
     private function enregistrerPaiement()
     {
         //ENREGISTREMENT D'UN PAIEMENT
+        $ep= new PayementManager;
+
         $_vue = new Vue('AjoutPayement');
         $_vue->generer(array());
-        //todo
+
+        if(!empty($_POST["AjoutPayement"])){
+            try {
+                $data= array(
+                    'eleve' => $_POST['eleve'], 'montantDuPayement' => $_POST['montantDuPayement']
+                );
+            } catch (Exception $e) {
+                $msgErreur =$e->getMessage();
+                $_vue = new Vue('Erreur');
+                $_vue->generer(array('msgErreur' =>$msgErreur));
+            }
+        }
+        
     }
     private function modifierPaiement()
     {
